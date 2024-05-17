@@ -1,0 +1,1377 @@
+[
+  {
+    "description": "erc20_transfer_000",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0xbeef0d9350f10c1f4d06e2eef61aa13d157849fe",
+      "Amount": "AGUS 332.579999113809559552",
+      "Nonce": "3896",
+      "GasLimit": "2035876",
+      "GasPrice": "459974581038",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "f86e820f38856b189f1b2e831f10a494a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb000000000000000000000000beef0d9350f10c1f4d06e2eef61aa13d157849fe0000000000000000000000000000000000000000000000120779831c12590000820d0a8080"
+  },
+  {
+    "description": "erc20_transfer_001",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x5d67b9111192a620590a583df31a9b7303214768",
+      "Amount": "AGUS 436.883960456029732864",
+      "Nonce": "1265",
+      "GasLimit": "1701572",
+      "GasPrice": "433572577279",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "f86e8204f18564f2f07fff8319f6c494a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb0000000000000000000000005d67b9111192a620590a583df31a9b7303214768000000000000000000000000000000000000000000000017aefb9f5307750000820d0a8080"
+  },
+  {
+    "description": "erc20_transfer_002",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0xc59564435f2fcb23d89ecf0b0fb58cdbc52d779e",
+      "Amount": "AGUS 189.497053893980291072",
+      "Nonce": "1907",
+      "GasLimit": "1561143",
+      "GasPrice": "388949159787",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "f86e820773855a8f2d2f6b8317d23794a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb000000000000000000000000c59564435f2fcb23d89ecf0b0fb58cdbc52d779e00000000000000000000000000000000000000000000000a45ccc684a5bf8000820d0a8080"
+  },
+  {
+    "description": "erc20_transfer_003",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x66325a3b1a2fc1227bd33302a942b774d7fd7829",
+      "Amount": "AGUS 256.08246421789016064",
+      "Nonce": "1815",
+      "GasLimit": "1671369",
+      "GasPrice": "313228332686",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "f86e8207178548eddd0e8e831980c994a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb00000000000000000000000066325a3b1a2fc1227bd33302a942b774d7fd782900000000000000000000000000000000000000000000000de1dbac6c52060000820d0a8080"
+  },
+  {
+    "description": "erc20_transfer_004",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x6a3eb9c2d507c29856f76e673976b430c47018b4",
+      "Amount": "AGUS 153.343785710587609088",
+      "Nonce": "1304",
+      "GasLimit": "2831687",
+      "GasPrice": "328491576538",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "f86e820518854c7b9facda832b354794a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb0000000000000000000000006a3eb9c2d507c29856f76e673976b430c47018b4000000000000000000000000000000000000000000000008501290a751320000820d0a8080"
+  },
+  {
+    "description": "erc20_transfer_005",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x8d433a29b31b97af1e8e82d4340abd4938d3a165",
+      "Amount": "AGUS 471.805024447420891136",
+      "Nonce": "3621",
+      "GasLimit": "2188923",
+      "GasPrice": "256802972842",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "f86e820e25853bcaa664aa8321667b94a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb0000000000000000000000008d433a29b31b97af1e8e82d4340abd4938d3a165000000000000000000000000000000000000000000000019939c2a0139030000820d0a8080"
+  },
+  {
+    "description": "erc20_transfer_006",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x01ef3832d56781a6e7099c719477e4b0f1a1660a",
+      "Amount": "AGUS 426.211305545848520704",
+      "Nonce": "871",
+      "GasLimit": "2485700",
+      "GasPrice": "312217359470",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "f86e8203678548b19ad46e8325edc494a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb00000000000000000000000001ef3832d56781a6e7099c719477e4b0f1a1660a0000000000000000000000000000000000000000000000171adebc3acbc70000820d0a8080"
+  },
+  {
+    "description": "erc20_transfer_007",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x852fa358ffdc668409c0c7da62279c5da77d5358",
+      "Amount": "AGUS 198.979982109489430528",
+      "Nonce": "2053",
+      "GasLimit": "2246807",
+      "GasPrice": "265240587065",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "f86e820805853dc1922b398322489794a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb000000000000000000000000852fa358ffdc668409c0c7da62279c5da77d535800000000000000000000000000000000000000000000000ac966e77cc9b30000820d0a8080"
+  },
+  {
+    "description": "erc20_transfer_008",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0xf7b72d39e1093914687b0512ba7e26d1fd561711",
+      "Amount": "AGUS 363.414637061430181888",
+      "Nonce": "4585",
+      "GasLimit": "1850473",
+      "GasPrice": "240048249201",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "f86e8211e98537e3fd9971831c3c6994a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb000000000000000000000000f7b72d39e1093914687b0512ba7e26d1fd561711000000000000000000000000000000000000000000000013b36426f4400e0000820d0a8080"
+  },
+  {
+    "description": "erc20_transfer_009",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x5242c75a2c772092f823c38c94c7187fe54fdc91",
+      "Amount": "AGUS 307.429311318251667456",
+      "Nonce": "2451",
+      "GasLimit": "1670252",
+      "GasPrice": "301942201753",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "f86e82099385464d285d9983197c6c94a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb0000000000000000000000005242c75a2c772092f823c38c94c7187fe54fdc91000000000000000000000000000000000000000000000010aa7051d04b5e0000820d0a8080"
+  },
+  {
+    "description": "erc20_transfer_010",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x6921db58a842c2ab1069aad91aa7bc22ac137e44",
+      "Amount": "AGUS 132.735111701156265984",
+      "Nonce": "884",
+      "GasLimit": "2821460",
+      "GasPrice": "239117452266",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "f86e8203748537ac82c3ea832b0d5494a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb0000000000000000000000006921db58a842c2ab1069aad91aa7bc22ac137e440000000000000000000000000000000000000000000000073211d8d4d9370000820d0a8080"
+  },
+  {
+    "description": "erc20_transfer_011",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x9b1bef758c922040f33e3a856d6e0e6f76425bc9",
+      "Amount": "AGUS 417.274171043573661696",
+      "Nonce": "369",
+      "GasLimit": "2338295",
+      "GasPrice": "363347968492",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "f86e8201718554993a01ec8323adf794a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb0000000000000000000000009b1bef758c922040f33e3a856d6e0e6f76425bc90000000000000000000000000000000000000000000000169ed7a7c035cc0000820d0a8080"
+  },
+  {
+    "description": "erc20_transfer_012",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0xfe60f592a62768427c5b436674d22bc43cb742e9",
+      "Amount": "AGUS 75.201071275546312704",
+      "Nonce": "4126",
+      "GasLimit": "2065958",
+      "GasPrice": "382713922042",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "f86e82101e85591b8701fa831f862694a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb000000000000000000000000fe60f592a62768427c5b436674d22bc43cb742e9000000000000000000000000000000000000000000000004139fdfe48bc50000820d0a8080"
+  },
+  {
+    "description": "erc20_transfer_013",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x64ba8b4b7a90cecf135f50f4d1c7a891146c5a4e",
+      "Amount": "AGUS 298.578910977516240896",
+      "Nonce": "1834",
+      "GasLimit": "2771168",
+      "GasPrice": "241334504455",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "f86e82072a853830a84c07832a48e094a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb00000000000000000000000064ba8b4b7a90cecf135f50f4d1c7a891146c5a4e0000000000000000000000000000000000000000000000102f9d61985dd60000820d0a8080"
+  },
+  {
+    "description": "erc20_transfer_014",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x36483db08e6b2127e635168559be2f1394281321",
+      "Amount": "AGUS 475.250716717241729024",
+      "Nonce": "4436",
+      "GasLimit": "2611694",
+      "GasPrice": "396157407904",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "f86e821154855c3cd252a08327d9ee94a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb00000000000000000000000036483db08e6b2127e635168559be2f1394281321000000000000000000000000000000000000000000000019c36db8de3cfe0000820d0a8080"
+  },
+  {
+    "description": "erc20_transfer_015",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x37b4171bd4b2b47f869bec4ee2ab9b2787561465",
+      "Amount": "AGUS 68.251673799789805568",
+      "Nonce": "1790",
+      "GasLimit": "2068089",
+      "GasPrice": "238841654677",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "f86e8206fe85379c126d95831f8e7994a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb00000000000000000000000037b4171bd4b2b47f869bec4ee2ab9b2787561465000000000000000000000000000000000000000000000003b32ea7b5424e8000820d0a8080"
+  },
+  {
+    "description": "erc20_transfer_016",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0xb9d80e6cbb940c9800a43235875cbdddee540182",
+      "Amount": "AGUS 86.603195756563939328",
+      "Nonce": "4652",
+      "GasLimit": "2309561",
+      "GasPrice": "286827498622",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "f86e82122c8542c8404c7e83233db994a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb000000000000000000000000b9d80e6cbb940c9800a43235875cbdddee540182000000000000000000000000000000000000000000000004b1dc5bb27b9c4000820d0a8080"
+  },
+  {
+    "description": "erc20_transfer_017",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x0aba050aec0b6ef277a106c60651d88f9b566799",
+      "Amount": "AGUS 26.692040014710259712",
+      "Nonce": "3336",
+      "GasLimit": "2561411",
+      "GasPrice": "275612680654",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "f86e820d0885402bcbc1ce8327158394a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb0000000000000000000000000aba050aec0b6ef277a106c60651d88f9b566799000000000000000000000000000000000000000000000001726d2cf90f514000820d0a8080"
+  },
+  {
+    "description": "erc20_transfer_018",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x03e34b7cde5a0895abc800663b8cb6b0d364b4ab",
+      "Amount": "AGUS 287.859297720341594112",
+      "Nonce": "4261",
+      "GasLimit": "2805143",
+      "GasPrice": "279917982429",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "f86e8210a585412c6972dd832acd9794a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb00000000000000000000000003e34b7cde5a0895abc800663b8cb6b0d364b4ab00000000000000000000000000000000000000000000000f9ad9aa21fa5f8000820d0a8080"
+  },
+  {
+    "description": "erc20_transfer_019",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x382221359696aba4adcab3134a75dfa38db19501",
+      "Amount": "AGUS 192.429376158725341184",
+      "Nonce": "2561",
+      "GasLimit": "1941445",
+      "GasPrice": "267226444928",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "f86e820a01853e37eff480831d9fc594a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb000000000000000000000000382221359696aba4adcab3134a75dfa38db1950100000000000000000000000000000000000000000000000a6e7e7a14f2d88000820d0a8080"
+  },
+  {
+    "description": "erc20_transfer_020",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x65fdaa77d547ba33f511536da06b4c0b27aac88d",
+      "Amount": "AGUS 450.622662213972525056",
+      "Nonce": "579",
+      "GasLimit": "1840514",
+      "GasPrice": "365081995000",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "f86e8202438555009526f8831c158294a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb00000000000000000000000065fdaa77d547ba33f511536da06b4c0b27aac88d0000000000000000000000000000000000000000000000186da54bc84cac0000820d0a8080"
+  },
+  {
+    "description": "erc20_transfer_021",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0xb0dacb4d469fafac422253a4bd1e58c9caf3a166",
+      "Amount": "AGUS 70.858783960033755136",
+      "Nonce": "3224",
+      "GasLimit": "2017467",
+      "GasPrice": "330119270305",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "f86e820c98854cdca44fa1831ec8bb94a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb000000000000000000000000b0dacb4d469fafac422253a4bd1e58c9caf3a166000000000000000000000000000000000000000000000003d75cf895f1f58000820d0a8080"
+  },
+  {
+    "description": "erc20_transfer_022",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0xe5c78ce6a489448094b7f7fb77e060e80cc3f9a8",
+      "Amount": "AGUS 324.94796679599521792",
+      "Nonce": "1483",
+      "GasLimit": "2198990",
+      "GasPrice": "370819524644",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "f86e8205cb85565690e82483218dce94a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb000000000000000000000000e5c78ce6a489448094b7f7fb77e060e80cc3f9a80000000000000000000000000000000000000000000000119d8f162720b90000820d0a8080"
+  },
+  {
+    "description": "erc20_transfer_023",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x66600ea81c6aa89d7af1886e9bc72af723a5fa37",
+      "Amount": "AGUS 236.382693127309295616",
+      "Nonce": "3294",
+      "GasLimit": "2628985",
+      "GasPrice": "345245941970",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "f86e820cde8550624300d283281d7994a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb00000000000000000000000066600ea81c6aa89d7af1886e9bc72af723a5fa3700000000000000000000000000000000000000000000000cd07806fd77710000820d0a8080"
+  },
+  {
+    "description": "erc20_transfer_024",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0xe38467ac9b1dae486c2317e7882ccb36c8a6d139",
+      "Amount": "AGUS 241.383983430415122432",
+      "Nonce": "4007",
+      "GasLimit": "2985580",
+      "GasPrice": "283830500336",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "f86e820fa78542159dbbf0832d8e6c94a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb000000000000000000000000e38467ac9b1dae486c2317e7882ccb36c8a6d13900000000000000000000000000000000000000000000000d15e02e05d6ab8000820d0a8080"
+  },
+  {
+    "description": "erc20_eip1559_transfer_025",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0xfef8d0e6a0fab1c10a36af8043a0db5cae1d3e14",
+      "Amount": "AGUS 311.97194783596904448",
+      "Nonce": "4001",
+      "MaxPriorityFeePerGas": "2959165",
+      "MaxFeePerGas": "413185879988",
+      "GasLimit": "2447325",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "02f871820d0a820fa1832d273d856033cc2fb4832557dd94a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb000000000000000000000000fef8d0e6a0fab1c10a36af8043a0db5cae1d3e14000000000000000000000000000000000000000000000010e97b01a899a10000c0"
+  },
+  {
+    "description": "erc20_eip1559_transfer_026",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x8ce5730c9072987c488e3f02484775b1ddf1dd74",
+      "Amount": "AGUS 87.839118526458544128",
+      "Nonce": "58",
+      "MaxPriorityFeePerGas": "2550745",
+      "MaxFeePerGas": "261639560674",
+      "GasLimit": "2773758",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "02f86f820d0a3a8326ebd9853ceaeedde2832a52fe94a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb0000000000000000000000008ce5730c9072987c488e3f02484775b1ddf1dd74000000000000000000000000000000000000000000000004c3033ce880fec000c0"
+  },
+  {
+    "description": "erc20_eip1559_transfer_027",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x6bad47564e1a5467be8abc77ef115f9c9531e181",
+      "Amount": "AGUS 434.133714783503384576",
+      "Nonce": "2038",
+      "MaxPriorityFeePerGas": "2708991",
+      "MaxFeePerGas": "277093764304",
+      "GasLimit": "2459883",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "02f871820d0a8207f6832955ff854084134cd0832588eb94a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb0000000000000000000000006bad47564e1a5467be8abc77ef115f9c9531e18100000000000000000000000000000000000000000000001788d0c974e3780000c0"
+  },
+  {
+    "description": "erc20_eip1559_transfer_028",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x3fe017a91a722d157f0779ef9d1253c149fe0791",
+      "Amount": "AGUS 8.726576125364093952",
+      "Nonce": "1996",
+      "MaxPriorityFeePerGas": "1603809",
+      "MaxFeePerGas": "406005936659",
+      "GasLimit": "2606621",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "02f871820d0a8207cc831878e1855e87d6f2138327c61d94a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb0000000000000000000000003fe017a91a722d157f0779ef9d1253c149fe0791000000000000000000000000000000000000000000000000791b06c029bb4400c0"
+  },
+  {
+    "description": "erc20_eip1559_transfer_029",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x4e3409511dbadaa314562a89d7c3fdc74cb3e222",
+      "Amount": "AGUS 59.164353271654367232",
+      "Nonce": "2067",
+      "MaxPriorityFeePerGas": "2210936",
+      "MaxFeePerGas": "237091887980",
+      "GasLimit": "2105218",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "02f871820d0a8208138321bc78853733c71b6c83201f8294a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb0000000000000000000000004e3409511dbadaa314562a89d7c3fdc74cb3e222000000000000000000000000000000000000000000000003351201d59aadc000c0"
+  },
+  {
+    "description": "erc20_eip1559_transfer_030",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0xd6eb8b39ef2f1e799aece21a7e89996799b14653",
+      "Amount": "AGUS 285.0577078172786688",
+      "Nonce": "3854",
+      "MaxPriorityFeePerGas": "2183123",
+      "MaxFeePerGas": "365413974017",
+      "GasLimit": "1570252",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "02f871820d0a820f0e83214fd38555145ec0018317f5cc94a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb000000000000000000000000d6eb8b39ef2f1e799aece21a7e89996799b1465300000000000000000000000000000000000000000000000f73f86af597fc8000c0"
+  },
+  {
+    "description": "erc20_eip1559_transfer_031",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x58e4608523298feea91442a8cd3f384eda377d5f",
+      "Amount": "AGUS 95.079601045819588608",
+      "Nonce": "4927",
+      "MaxPriorityFeePerGas": "2037873",
+      "MaxFeePerGas": "378159852617",
+      "GasLimit": "1782678",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "02f871820d0a82133f831f187185580c156c49831b339694a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb00000000000000000000000058e4608523298feea91442a8cd3f384eda377d5f000000000000000000000000000000000000000000000005277e9965d9ef8000c0"
+  },
+  {
+    "description": "erc20_eip1559_transfer_032",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x6ad628e16677fa79534828d2a4eeb052db5b0393",
+      "Amount": "AGUS 426.60035114175889408",
+      "Nonce": "2301",
+      "MaxPriorityFeePerGas": "1604351",
+      "MaxFeePerGas": "417555611947",
+      "GasLimit": "2621066",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "02f871820d0a8208fd83187aff85613841012b8327fe8a94a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb0000000000000000000000006ad628e16677fa79534828d2a4eeb052db5b03930000000000000000000000000000000000000000000000172044e7234d720000c0"
+  },
+  {
+    "description": "erc20_eip1559_transfer_033",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0xf37da8238cde861c17eeace6cb4d41044d68e11c",
+      "Amount": "AGUS 212.47115193629540352",
+      "Nonce": "1429",
+      "MaxPriorityFeePerGas": "1794762",
+      "MaxFeePerGas": "245416161322",
+      "GasLimit": "2122831",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "02f871820d0a820595831b62ca853923f1702a8320644f94a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb000000000000000000000000f37da8238cde861c17eeace6cb4d41044d68e11c00000000000000000000000000000000000000000000000b84a12af734f00000c0"
+  },
+  {
+    "description": "erc20_eip1559_transfer_034",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x9b0fd9579fe02b420d47801bd4993ed36f1d3daf",
+      "Amount": "AGUS 103.496825292679675904",
+      "Nonce": "1165",
+      "MaxPriorityFeePerGas": "2025758",
+      "MaxFeePerGas": "238174232381",
+      "GasLimit": "2916211",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "02f871820d0a82048d831ee91e8537744a5f3d832c7f7394a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb0000000000000000000000009b0fd9579fe02b420d47801bd4993ed36f1d3daf0000000000000000000000000000000000000000000000059c4e964106d60000c0"
+  },
+  {
+    "description": "erc20_eip1559_transfer_035",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0xd24bd3aced7ea0fdd298e18311dc22297823d50f",
+      "Amount": "AGUS 460.884379617234845696",
+      "Nonce": "99",
+      "MaxPriorityFeePerGas": "2626275",
+      "MaxFeePerGas": "355024593981",
+      "GasLimit": "2996380",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "02f86f820d0a63832812e38552a91d643d832db89c94a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb000000000000000000000000d24bd3aced7ea0fdd298e18311dc22297823d50f000000000000000000000000000000000000000000000018fc0e3d644b910000c0"
+  },
+  {
+    "description": "erc20_eip1559_transfer_036",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x1a96be9af4f213a5893616135092c2a0f6f7192f",
+      "Amount": "AGUS 456.567680376137580544",
+      "Nonce": "4064",
+      "MaxPriorityFeePerGas": "1892527",
+      "MaxFeePerGas": "449191395810",
+      "GasLimit": "2517036",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "02f871820d0a820fe0831ce0af856895e4c1e28326682c94a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb0000000000000000000000001a96be9af4f213a5893616135092c2a0f6f7192f000000000000000000000000000000000000000000000018c0263e4d87c40000c0"
+  },
+  {
+    "description": "erc20_eip1559_transfer_037",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x38e3f176a424f896ba2811d5f1c538632c111611",
+      "Amount": "AGUS 341.921671119217360896",
+      "Nonce": "704",
+      "MaxPriorityFeePerGas": "2606013",
+      "MaxFeePerGas": "334362802774",
+      "GasLimit": "2742409",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "02f871820d0a8202c08327c3bd854dd9937a568329d88994a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb00000000000000000000000038e3f176a424f896ba2811d5f1c538632c111611000000000000000000000000000000000000000000000012891dcc4de4e40000c0"
+  },
+  {
+    "description": "erc20_eip1559_transfer_038",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x309496f3aaba3541e133f10c6496d5160861b30d",
+      "Amount": "AGUS 406.130431578629799936",
+      "Nonce": "3616",
+      "MaxPriorityFeePerGas": "2990444",
+      "MaxFeePerGas": "329789800185",
+      "GasLimit": "1908085",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "02f871820d0a820e20832da16c854cc900fef9831d1d7594a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb000000000000000000000000309496f3aaba3541e133f10c6496d5160861b30d000000000000000000000000000000000000000000000016043123bfe0510000c0"
+  },
+  {
+    "description": "erc20_eip1559_transfer_039",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x5e377c0cb8a8c457c6b20c80b049695c435a104c",
+      "Amount": "AGUS 468.159069725081141248",
+      "Nonce": "4407",
+      "MaxPriorityFeePerGas": "2482876",
+      "MaxFeePerGas": "245054879130",
+      "GasLimit": "2516862",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "02f871820d0a8211378325e2bc85390e68b59a8326677e94a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb0000000000000000000000005e377c0cb8a8c457c6b20c80b049695c435a104c000000000000000000000000000000000000000000000019610321807ccb0000c0"
+  },
+  {
+    "description": "erc20_eip1559_transfer_040",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x9262cdc81ba892a9b975f1bdec15850b5dbd2bcf",
+      "Amount": "AGUS 19.375823980847693824",
+      "Nonce": "3933",
+      "MaxPriorityFeePerGas": "2976447",
+      "MaxFeePerGas": "382537517945",
+      "GasLimit": "2108416",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "02f871820d0a820f5d832d6abf855911034b7983202c0094a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb0000000000000000000000009262cdc81ba892a9b975f1bdec15850b5dbd2bcf0000000000000000000000000000000000000000000000010ce4c140c8ec0000c0"
+  },
+  {
+    "description": "erc20_eip1559_transfer_041",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x76a3c73861e411050d323ae5705700b2c8a288dd",
+      "Amount": "AGUS 258.369773170761367552",
+      "Nonce": "4887",
+      "MaxPriorityFeePerGas": "2393504",
+      "MaxFeePerGas": "238188616010",
+      "GasLimit": "2532277",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "02f871820d0a821317832485a085377525d94a8326a3b594a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb00000000000000000000000076a3c73861e411050d323ae5705700b2c8a288dd00000000000000000000000000000000000000000000000e0199d3cc0d7b8000c0"
+  },
+  {
+    "description": "erc20_eip1559_transfer_042",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x08aec333f5599b6109a2a128fdb95f6109f4a843",
+      "Amount": "AGUS 70.2029732462680064",
+      "Nonce": "4588",
+      "MaxPriorityFeePerGas": "2457594",
+      "MaxFeePerGas": "367978686379",
+      "GasLimit": "2942001",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "02f871820d0a8211ec83257ffa8555ad3d27ab832ce43194a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb00000000000000000000000008aec333f5599b6109a2a128fdb95f6109f4a843000000000000000000000000000000000000000000000003ce431037580e6000c0"
+  },
+  {
+    "description": "erc20_eip1559_transfer_043",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x465d0960fc07f19cdfb79e431867f7f5cd14367b",
+      "Amount": "AGUS 224.258832077710262272",
+      "Nonce": "1267",
+      "MaxPriorityFeePerGas": "2843076",
+      "MaxFeePerGas": "434142543734",
+      "GasLimit": "2996955",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "02f871820d0a8204f3832b61c4856514e97f76832dbadb94a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb000000000000000000000000465d0960fc07f19cdfb79e431867f7f5cd14367b00000000000000000000000000000000000000000000000c28376b99b7e58000c0"
+  },
+  {
+    "description": "erc20_eip1559_transfer_044",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x88fffe7eb0cc297b3b22f257a89584f3250ba538",
+      "Amount": "AGUS 349.977352253622452224",
+      "Nonce": "349",
+      "MaxPriorityFeePerGas": "2469491",
+      "MaxFeePerGas": "256896493577",
+      "GasLimit": "2946744",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "02f871820d0a82015d8325ae73853bd0396809832cf6b894a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb00000000000000000000000088fffe7eb0cc297b3b22f257a89584f3250ba538000000000000000000000000000000000000000000000012f8e9539d7cec0000c0"
+  },
+  {
+    "description": "erc20_eip1559_transfer_045",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0xc342265b28695fa2e82c40140bc0317f91e375f3",
+      "Amount": "AGUS 499.709635720696168448",
+      "Nonce": "3497",
+      "MaxPriorityFeePerGas": "2831116",
+      "MaxFeePerGas": "270745072656",
+      "GasLimit": "2604786",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "02f871820d0a820da9832b330c853f09a9f4108327bef294a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb000000000000000000000000c342265b28695fa2e82c40140bc0317f91e375f300000000000000000000000000000000000000000000001b16dd421ce3f20000c0"
+  },
+  {
+    "description": "erc20_eip1559_transfer_046",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0xe7ce1918869abebdb079c9224945911a528de67d",
+      "Amount": "AGUS 174.11528081577132032",
+      "Nonce": "2761",
+      "MaxPriorityFeePerGas": "2886143",
+      "MaxFeePerGas": "386838985548",
+      "GasLimit": "2528204",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "02f871820d0a820ac9832c09ff855a11667b4c832693cc94a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb000000000000000000000000e7ce1918869abebdb079c9224945911a528de67d0000000000000000000000000000000000000000000000097055bd664f6f8000c0"
+  },
+  {
+    "description": "erc20_eip1559_transfer_047",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x643d1b2c3a7bfd76cc334f5f595fbd1cbe37da40",
+      "Amount": "AGUS 432.604773466016579584",
+      "Nonce": "1614",
+      "MaxPriorityFeePerGas": "2697747",
+      "MaxFeePerGas": "251909938430",
+      "GasLimit": "2665376",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "02f871820d0a82064e83292a13853aa7009cfe8328aba094a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb000000000000000000000000643d1b2c3a7bfd76cc334f5f595fbd1cbe37da400000000000000000000000000000000000000000000000177398e56dd4400000c0"
+  },
+  {
+    "description": "erc20_eip1559_transfer_048",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x466012dd763a47d30fc41c46c0cc7410e88aaae4",
+      "Amount": "AGUS 5.545089832857064448",
+      "Nonce": "395",
+      "MaxPriorityFeePerGas": "2270263",
+      "MaxFeePerGas": "370125474082",
+      "GasLimit": "2657871",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "02f871820d0a82018b8322a43785562d32892283288e4f94a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb000000000000000000000000466012dd763a47d30fc41c46c0cc7410e88aaae40000000000000000000000000000000000000000000000004cf41dd2e7135400c0"
+  },
+  {
+    "description": "erc20_eip1559_transfer_049",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x7f5c3839aa25e9fe69fa0d2e9e3704860a10e945",
+      "Amount": "AGUS 255.90621373493149696",
+      "Nonce": "3386",
+      "MaxPriorityFeePerGas": "2639181",
+      "MaxFeePerGas": "328580686377",
+      "GasLimit": "2851492",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "02f871820d0a820d3a8328454d854c80ef6229832b82a494a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb0000000000000000000000007f5c3839aa25e9fe69fa0d2e9e3704860a10e94500000000000000000000000000000000000000000000000ddf69818aedc80000c0"
+  },
+  {
+    "description": "erc20_eip2930_transfer_050",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0xea105552e8530683249f335b026474dafc58a228",
+      "Amount": "AGUS 255.19981414564151296",
+      "Nonce": "4408",
+      "GasLimit": "2253917",
+      "GasPrice": "435777614165",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "01f86d820d0a8211388565765eb1558322645d94a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb000000000000000000000000ea105552e8530683249f335b026474dafc58a22800000000000000000000000000000000000000000000000dd59bdedbe0ab8000c0"
+  },
+  {
+    "description": "erc20_eip2930_transfer_051",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x138636fae0e36edefb5e37b20fcb424a787d6b01",
+      "Amount": "AGUS 211.677034630228803584",
+      "Nonce": "2381",
+      "GasLimit": "2806222",
+      "GasPrice": "248604390624",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "01f86d820d0a82094d8539e1f9f4e0832ad1ce94a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb000000000000000000000000138636fae0e36edefb5e37b20fcb424a787d6b0100000000000000000000000000000000000000000000000b799be57bb2d90000c0"
+  },
+  {
+    "description": "erc20_eip2930_transfer_052",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x0bbd7328cf00f2c88218519135819938152341a1",
+      "Amount": "AGUS 419.013379292542533632",
+      "Nonce": "1743",
+      "GasLimit": "1958794",
+      "GasPrice": "340664623629",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "01f86d820d0a8206cf854f5131a20d831de38a94a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb0000000000000000000000000bbd7328cf00f2c88218519135819938152341a1000000000000000000000000000000000000000000000016b6fa907044040000c0"
+  },
+  {
+    "description": "erc20_eip2930_transfer_053",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x4c1132c0f6558d74c48fd733c6ab0500072cddf6",
+      "Amount": "AGUS 273.288801457259544576",
+      "Nonce": "95",
+      "GasLimit": "1963576",
+      "GasPrice": "281539478800",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "01f86b820d0a5f85418d0f8510831df63894a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb0000000000000000000000004c1132c0f6558d74c48fd733c6ab0500072cddf600000000000000000000000000000000000000000000000ed0a4dcfab0360000c0"
+  },
+  {
+    "description": "erc20_eip2930_transfer_054",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x48431e85a14f5bb2f3a30fe0f0db215b3912650c",
+      "Amount": "AGUS 342.166170983974699008",
+      "Nonce": "4603",
+      "GasLimit": "2265905",
+      "GasPrice": "428623992571",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "01f86d820d0a8211fb8563cbfb16fb8322933194a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb00000000000000000000000048431e85a14f5bb2f3a30fe0f0db215b3912650c0000000000000000000000000000000000000000000000128c826fa2c7620000c0"
+  },
+  {
+    "description": "erc20_eip2930_transfer_055",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0xcedd5b9830ed418a348c09af050f05c805554eac",
+      "Amount": "AGUS 201.215367218448564224",
+      "Nonce": "4448",
+      "GasLimit": "1889580",
+      "GasPrice": "275739223937",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "01f86d820d0a82116085403356a781831cd52c94a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb000000000000000000000000cedd5b9830ed418a348c09af050f05c805554eac00000000000000000000000000000000000000000000000ae86c966685680000c0"
+  },
+  {
+    "description": "erc20_eip2930_transfer_056",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x787a46ed54b48997f236872be82010e4e0c5e582",
+      "Amount": "AGUS 246.950612887592566784",
+      "Nonce": "1603",
+      "GasLimit": "1912070",
+      "GasPrice": "325760302814",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "01f86d820d0a820643854bd8d3bede831d2d0694a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb000000000000000000000000787a46ed54b48997f236872be82010e4e0c5e58200000000000000000000000000000000000000000000000d6320d20555f50000c0"
+  },
+  {
+    "description": "erc20_eip2930_transfer_057",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x4b5cdc8537f1ea528a80146fc5b6dd269081d004",
+      "Amount": "AGUS 61.089369030710157312",
+      "Nonce": "4444",
+      "GasLimit": "2709182",
+      "GasPrice": "317883060319",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "01f86d820d0a82115c854a034e905f832956be94a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb0000000000000000000000004b5cdc8537f1ea528a80146fc5b6dd269081d0040000000000000000000000000000000000000000000000034fc90977d43a6000c0"
+  },
+  {
+    "description": "erc20_eip2930_transfer_058",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x53e1706dc9254909ff864231ade620c5121915a8",
+      "Amount": "AGUS 263.314346400750567424",
+      "Nonce": "4248",
+      "GasLimit": "2139674",
+      "GasPrice": "404095259000",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "01f86d820d0a821098855e15f451788320a61a94a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb00000000000000000000000053e1706dc9254909ff864231ade620c5121915a800000000000000000000000000000000000000000000000e46387af3c8e50000c0"
+  },
+  {
+    "description": "erc20_eip2930_transfer_059",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x019918da057ab8a09fce0ce3109cc366230c82ee",
+      "Amount": "AGUS 75.877659278619787264",
+      "Nonce": "4748",
+      "GasLimit": "1649011",
+      "GasPrice": "346012914644",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "01f86d820d0a82128c85508ffa13d48319297394a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb000000000000000000000000019918da057ab8a09fce0ce3109cc366230c82ee0000000000000000000000000000000000000000000000041d039918ca414000c0"
+  },
+  {
+    "description": "erc20_eip2930_transfer_060",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x2d913629c1f95363ad0732e07267677ce602e301",
+      "Amount": "AGUS 1.812843131714814208",
+      "Nonce": "174",
+      "GasLimit": "2112828",
+      "GasPrice": "429669209362",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "01f86c820d0a81ae85640a47d51283203d3c94a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb0000000000000000000000002d913629c1f95363ad0732e07267677ce602e30100000000000000000000000000000000000000000000000019288339335e4100c0"
+  },
+  {
+    "description": "erc20_eip2930_transfer_061",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x50d0f18840ed4bb7c419f5f2ab4d72935f175cf4",
+      "Amount": "AGUS 384.039600088388206592",
+      "Nonce": "981",
+      "GasLimit": "1953446",
+      "GasPrice": "416640242582",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "01f86d820d0a8203d5856101b19396831dcea694a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb00000000000000000000000050d0f18840ed4bb7c419f5f2ab4d72935f175cf4000000000000000000000000000000000000000000000014d19ebd8d27740000c0"
+  },
+  {
+    "description": "erc20_eip2930_transfer_062",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x3ea9b651a9cf072ee8a3e4274a6af8854244b584",
+      "Amount": "AGUS 274.667982588525543424",
+      "Nonce": "596",
+      "GasLimit": "2123775",
+      "GasPrice": "407975035011",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "01f86d820d0a820254855efd350083832067ff94a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb0000000000000000000000003ea9b651a9cf072ee8a3e4274a6af8854244b58400000000000000000000000000000000000000000000000ee3c8b2e9323e0000c0"
+  },
+  {
+    "description": "erc20_eip2930_transfer_063",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0xe6d090178a624cd3e7e9ed8cc5bce570ba40cdbd",
+      "Amount": "AGUS 257.350191647547031552",
+      "Nonce": "3398",
+      "GasLimit": "1970760",
+      "GasPrice": "449835637021",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "01f86d820d0a820d468568bc4b191d831e124894a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb000000000000000000000000e6d090178a624cd3e7e9ed8cc5bce570ba40cdbd00000000000000000000000000000000000000000000000df3738bcdbebd8000c0"
+  },
+  {
+    "description": "erc20_eip2930_transfer_064",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0xad4b79ab6e63234895d38dfe844affbfcca95de7",
+      "Amount": "AGUS 75.890510735190704128",
+      "Nonce": "667",
+      "GasLimit": "2702205",
+      "GasPrice": "324860461690",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "01f86d820d0a82029b854ba331427a83293b7d94a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb000000000000000000000000ad4b79ab6e63234895d38dfe844affbfcca95de70000000000000000000000000000000000000000000000041d31416db202c000c0"
+  },
+  {
+    "description": "erc20_eip2930_transfer_065",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0xb5386834f4d01a47d68ef120d2e30a8ad95ebb55",
+      "Amount": "AGUS 369.126913982842339328",
+      "Nonce": "3540",
+      "GasLimit": "2760525",
+      "GasPrice": "467805423632",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "01f86d820d0a820dd4856ceb604810832a1f4d94a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb000000000000000000000000b5386834f4d01a47d68ef120d2e30a8ad95ebb5500000000000000000000000000000000000000000000001402aa3c8c977d0000c0"
+  },
+  {
+    "description": "erc20_eip2930_transfer_066",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x5d89b14a49dcc6f699af313eaaaac0e88e4fef2e",
+      "Amount": "AGUS 119.975353477259624448",
+      "Nonce": "2330",
+      "GasLimit": "2906311",
+      "GasPrice": "245027655901",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "01f86d820d0a82091a85390cc950dd832c58c794a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb0000000000000000000000005d89b14a49dcc6f699af313eaaaac0e88e4fef2e00000000000000000000000000000000000000000000000680fe1454b5fc8000c0"
+  },
+  {
+    "description": "erc20_eip2930_transfer_067",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x9a80867b20889de2c9e10222b6dbf6aafd83350a",
+      "Amount": "AGUS 115.597299177956917248",
+      "Nonce": "307",
+      "GasLimit": "2172998",
+      "GasPrice": "288456637675",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "01f86d820d0a8201338543295afceb8321284694a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb0000000000000000000000009a80867b20889de2c9e10222b6dbf6aafd83350a000000000000000000000000000000000000000000000006443c1b2440ad4000c0"
+  },
+  {
+    "description": "erc20_eip2930_transfer_068",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x09569488eb156348369c3000746461179fd71bd1",
+      "Amount": "AGUS 228.992982710850224128",
+      "Nonce": "135",
+      "GasLimit": "2463648",
+      "GasPrice": "259477600076",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "01f86c820d0a8187853c6a11f74c832597a094a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb00000000000000000000000009569488eb156348369c3000746461179fd71bd100000000000000000000000000000000000000000000000c69ea8084c9650000c0"
+  },
+  {
+    "description": "erc20_eip2930_transfer_069",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0xee08e97df2c14e5b348ef347e24b7a1456075564",
+      "Amount": "AGUS 263.872855570788548608",
+      "Nonce": "276",
+      "GasLimit": "1829460",
+      "GasPrice": "249212254076",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "01f86d820d0a820114853a0635377c831bea5494a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb000000000000000000000000ee08e97df2c14e5b348ef347e24b7a145607556400000000000000000000000000000000000000000000000e4df8b41554ce8000c0"
+  },
+  {
+    "description": "erc20_eip2930_transfer_070",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x67ff5ed15932326b72a74bdce76c74165d18e631",
+      "Amount": "AGUS 365.83738960812670976",
+      "Nonce": "1956",
+      "GasLimit": "2799174",
+      "GasPrice": "383733810796",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "01f86d820d0a8207a485595851466c832ab64694a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb00000000000000000000000067ff5ed15932326b72a74bdce76c74165d18e631000000000000000000000000000000000000000000000013d5037f8f1c930000c0"
+  },
+  {
+    "description": "erc20_eip2930_transfer_071",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x3e66553cb899bdee91f0564baa95dfc632eb0246",
+      "Amount": "AGUS 416.523727521917108224",
+      "Nonce": "1129",
+      "GasLimit": "2941250",
+      "GasPrice": "337437186136",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "01f86d820d0a820469854e90d2d858832ce14294a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb0000000000000000000000003e66553cb899bdee91f0564baa95dfc632eb0246000000000000000000000000000000000000000000000016946d8b5809770000c0"
+  },
+  {
+    "description": "erc20_eip2930_transfer_072",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x2719ecd5e172979383c1766a27ef2e4456931171",
+      "Amount": "AGUS 270.9708040615043072",
+      "Nonce": "1729",
+      "GasLimit": "2097631",
+      "GasPrice": "279909953861",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "01f86d820d0a8206c185412beef145832001df94a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb0000000000000000000000002719ecd5e172979383c1766a27ef2e445693117100000000000000000000000000000000000000000000000eb079aea10bf08000c0"
+  },
+  {
+    "description": "erc20_eip2930_transfer_073",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0xa489cef83b6cf434da65fda2d94efa58e098d0d4",
+      "Amount": "AGUS 80.891353002294214656",
+      "Nonce": "2730",
+      "GasLimit": "2080989",
+      "GasPrice": "304043725062",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "01f86d820d0a820aaa8546ca6b1106831fc0dd94a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb000000000000000000000000a489cef83b6cf434da65fda2d94efa58e098d0d40000000000000000000000000000000000000000000000046297d0f98e798000c0"
+  },
+  {
+    "description": "erc20_eip2930_transfer_074",
+    "encoded_tx": "",
+    "valid": true,
+    "error": "",
+    "message": {
+      "Receiver": "0x3d8f13095c21aa83845c91b8a1da0e309951de06",
+      "Amount": "AGUS 174.482402546937593856",
+      "Nonce": "1513",
+      "GasLimit": "2680950",
+      "GasPrice": "426784782485",
+      "Contract": "0xa810acb7ccdc4ed824b952be940d6392434672cf",
+      "Data": "a9059cbb000000000000...",
+      "Value": "0",
+      "Eth-Hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "encoded_tx_hex": "01f86d820d0a8205e985635e5af8958328e87694a810acb7ccdc4ed824b952be940d6392434672cf80b844a9059cbb0000000000000000000000003d8f13095c21aa83845c91b8a1da0e309951de06000000000000000000000000000000000000000000000009756e04ab46ed8000c0"
+  }
+]

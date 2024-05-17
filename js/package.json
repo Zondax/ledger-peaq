@@ -1,0 +1,47 @@
+{
+  "name": "@zondax/ledger-peaq",
+  "author": "Zondax AG",
+  "license": "Apache-2.0",
+  "version": "0.0.1",
+  "description": "Node API for the Peaq App (Ledger Nano S/X/S+)",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "types": "./dist/index.d.ts",
+  "homepage": "https://github.com/zondax/ledger-peaq",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zondax/ledger-peaq.git"
+  },
+  "keywords": [
+    "Zondax",
+    "Ledger",
+    "Javascript",
+    "Peaq"
+  ],
+  "scripts": {
+    "build": "tsc"
+  },
+  "bugs": {
+    "url": "https://github.com/zondax/ledger-peaq/issues"
+  },
+  "dependencies": {
+    "@ledgerhq/hw-app-eth": "6.35.7",
+    "@zondax/ledger-js": "^0.9.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.17",
+    "@typescript-eslint/eslint-plugin": "^7.11.0",
+    "@typescript-eslint/parser": "^7.11.0",
+    "eslint": "^9.3.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-standard-with-typescript": "^43.0.1",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^17.7.0",
+    "eslint-plugin-promise": "^6.2.0",
+    "prettier": "^3.2.5",
+    "typescript": "^5.3.3"
+  },
+  "files": [
+    "dist/**/*"
+  ]
+}

@@ -16,3 +16,6 @@
 [submodule "ledger-peaq-js"]
 	path = js
 	url = https://github.com/Zondax/ledger-peaq-js
+[submodule "deps/BLAKE2"]
+	path = deps/BLAKE2
+	url = https://github.com/BLAKE2/BLAKE2

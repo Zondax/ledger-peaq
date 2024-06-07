@@ -88,6 +88,9 @@ parser_error_t printERC20Value(const eth_tx_t *ethObj, char *outVal, uint16_t ou
 }
 
 bool validateERC20(eth_tx_t *ethObj) {
+    if (ethObj == NULL) {
+        return false;
+    }
     // Check that data start with ERC20 prefix
     if (ethObj == NULL || ethObj->tx.to.rlpLen != ETH_ADDRESS_LEN || ethObj->tx.data.ptr == NULL ||
         ethObj->tx.data.rlpLen != ERC20_DATA_LENGTH ||

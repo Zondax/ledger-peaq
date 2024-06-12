@@ -156,6 +156,42 @@ jobs:
           draft: false
           prerelease: false
 
+  build_package_nanos_xl:
+    needs: [configure, build, build_ledger, test_zemu]
+    if: ${{ github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    container:
+      image: zondax/ledger-app-builder:latest
+      options: --user ${{ needs.configure.outputs.uid_gid }}
+      env:
+        BOLOS_SDK: /opt/nanos-secure-sdk
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: Install deps
+        run: pip install ledgerblue
+
+      - name: Build NanoS XL
+        shell: bash -l {0}
+        run: |
+          make SUBSTRATE_PARSER_FULL=1
+          mv ./app/pkg/installer_s.sh ./app/pkg/installer_nanos_xl.sh
+      - name: Set tag
+        id: nanos_xl
+        run: echo "tag_name=$(./app/pkg/installer_nanos_xl.sh version)" >> $GITHUB_OUTPUT
+      - name: Update Release
+        id: update_release_1
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          files: ./app/pkg/installer_nanos_xl.sh
+          tag_name: ${{ steps.nanos_xl.outputs.tag_name }}
+          draft: false
+          prerelease: false
+
   build_package_nanosp:
     needs: [configure, build, build_ledger, test_zemu]
     if: ${{ github.ref == 'refs/heads/main' }}

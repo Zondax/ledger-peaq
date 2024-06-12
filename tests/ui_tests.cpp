@@ -161,11 +161,39 @@ void check_testcase(const testcase_t &tc, bool expert_mode, bool is_eth) {
 }
 
 class VerifyEvmTransactions : public JsonTestsA {};
+class VerifyCurrentSubstrate : public JsonTestsA {};
+class VerifyPreviousSubstrate : public JsonTestsA {};
 
 INSTANTIATE_TEST_SUITE_P(EVMTransactions, VerifyEvmTransactions,
                          ::testing::ValuesIn(GetEVMJsonTestCases("evm.json", EVMGenerateExpectedUIOutput)),
                          JsonTestsA::PrintToStringParamName());
 
+INSTANTIATE_TEST_SUITE_P(JsonTestCasesCurrentTxVer, VerifyCurrentSubstrate,
+                         ::testing::ValuesIn(GetJsonTestCases("testcases_current.json")),
+                         JsonTestsA::PrintToStringParamName());
+
+INSTANTIATE_TEST_SUITE_P(JsonTestCasesPreviousTxVer, VerifyPreviousSubstrate,
+                         ::testing::ValuesIn(GetJsonTestCases("testcases_previous.json")),
+                         JsonTestsA::PrintToStringParamName());
+
 TEST_P(VerifyEvmTransactions, CheckUIOutput_CurrentTX_Normal) {
     check_testcase(GetParam(), false, true);
+}
+
+// Parametric test using current runtime:
+TEST_P(VerifyCurrentSubstrate, CheckUIOutput_CurrentTX_Normal) {
+    check_testcase(GetParam(), false, false);
+}
+
+TEST_P(VerifyCurrentSubstrate, CheckUIOutput_CurrentTX_Expert) {
+    check_testcase(GetParam(), true, false);
+}
+
+// Parametric test using previous runtime:
+TEST_P(VerifyPreviousSubstrate, CheckUIOutput_PreviousTX_Normal) {
+    check_testcase(GetParam(), false, false);
+}
+
+TEST_P(VerifyPreviousSubstrate, CheckUIOutput_PreviousTX_Expert) {
+    check_testcase(GetParam(), true, false);
 }

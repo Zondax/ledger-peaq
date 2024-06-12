@@ -19,12 +19,18 @@
 #include <stdio.h>
 #include <zxmacros.h>
 
-#include "parser_common.h"
 #include "rlp.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#define CHECK_ERROR_EVM(__CALL)               \
+    {                                         \
+        parser_error_t __err = __CALL;        \
+        CHECK_APP_CANARY()                    \
+        if (__err != parser_ok) return __err; \
+    }
 
 typedef enum RlpError {
     rlp_ok = 0,

@@ -16,6 +16,7 @@
 
 #include "evm_erc20.h"
 
+#include "evm_utils.h"
 #include "zxformat.h"
 
 // Prefix is calculated as: keccak256("transfer(address,uint256)") = 0xa9059cbb
@@ -60,12 +61,12 @@ parser_error_t printERC20Value(const eth_tx_t *ethObj, char *outVal, uint16_t ou
     // [identifier (4) | token contract (12 + 20) | value (32)]
     char tokenSymbol[10] = {0};
     uint8_t decimals = 0;
-    CHECK_ERROR(getERC20Token(ethObj, tokenSymbol, &decimals))
+    CHECK_ERROR_EVM(getERC20Token(ethObj, tokenSymbol, &decimals))
 
     uint256_t value = {0};
     const uint8_t *valuePtr = ethObj->tx.data.ptr + SELECTOR_LENGTH + BIGINT_LENGTH;
     parser_context_t tmpCtx = {.buffer = valuePtr, .bufferLen = BIGINT_LENGTH, .offset = 0};
-    CHECK_ERROR(readu256BE(&tmpCtx, &value));
+    CHECK_ERROR_EVM(readu256BE(&tmpCtx, &value));
 
     char bufferUI[100] = {0};
     if (!tostring256(&value, DECIMAL_BASE, bufferUI, sizeof(bufferUI))) {

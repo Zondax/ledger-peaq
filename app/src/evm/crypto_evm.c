@@ -23,8 +23,19 @@
 #include "zxformat.h"
 #include "zxmacros.h"
 
+uint8_t peaq_chain_code;
 uint32_t hdPathEth[HDPATH_LEN_DEFAULT];
 uint32_t hdPathEth_len;
+
+#define KECCAK_256_SIZE 32
+
+#define CHECK_CX_OK(CALL)         \
+    do {                          \
+        cx_err_t __cx_err = CALL; \
+        if (__cx_err != CX_OK) {  \
+            return zxerr_unknown; \
+        }                         \
+    } while (0)
 
 typedef struct {
     uint8_t r[32];
@@ -47,6 +58,16 @@ typedef struct {
     uint8_t chainCode[32];
 
 } __attribute__((packed)) answer_eth_t;
+
+zxerr_t keccak_digest(const unsigned char *in, unsigned int inLen, unsigned char *out, unsigned int outLen) {
+#if defined(LEDGER_SPECIFIC)
+    // return actual size using value from signatureLength
+    cx_sha3_t keccak;
+    if (cx_keccak_init_no_throw(&keccak, outLen * 8) != CX_OK) return zxerr_unknown;
+    CHECK_CX_OK(cx_hash_no_throw((cx_hash_t *)&keccak, CX_LAST, in, inLen, out, outLen));
+#endif
+    return zxerr_ok;
+}
 
 zxerr_t crypto_extractUncompressedPublicKey(uint8_t *pubKey, uint16_t pubKeyLen, uint8_t *chainCode) {
     if (pubKey == NULL || pubKeyLen < PK_LEN_SECP256K1_UNCOMPRESSED) {

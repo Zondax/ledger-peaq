@@ -15,6 +15,7 @@
  ********************************************************************************/
 #include "rlp.h"
 
+#include "evm_utils.h"
 #include "zxformat.h"
 #include "zxmacros.h"
 
@@ -24,7 +25,7 @@ parser_error_t rlp_parseStream(parser_context_t *ctx, rlp_t *rlp, uint16_t *fiel
     }
     *fields = 0;
     while (ctx->offset < ctx->bufferLen && (*fields) < maxFields) {
-        CHECK_ERROR(rlp_read(ctx, rlp))
+        CHECK_ERROR_EVM(rlp_read(ctx, rlp))
         (*fields)++;
         rlp++;
     }
@@ -47,7 +48,7 @@ parser_error_t rlp_read(parser_context_t *ctx, rlp_t *rlp) {
     }
 
     const uint8_t *prefixPtr = NULL;
-    CHECK_ERROR(readBytes(ctx, &prefixPtr, 1))
+    CHECK_ERROR_EVM(readBytes(ctx, &prefixPtr, 1))
     const uint8_t prefix = *prefixPtr;
 
     if (prefix <= RLP_KIND_BYTE_PREFIX) {
@@ -61,20 +62,20 @@ parser_error_t rlp_read(parser_context_t *ctx, rlp_t *rlp) {
         if (rlp->rlpLen == 0) {
             rlp->ptr = prefixPtr;
         } else {
-            CHECK_ERROR(readBytes(ctx, &rlp->ptr, rlp->rlpLen))
+            CHECK_ERROR_EVM(readBytes(ctx, &rlp->ptr, rlp->rlpLen))
         }
 
     } else if (prefix <= RLP_KIND_STRING_LONG_MAX) {
         rlp->kind = RLP_KIND_STRING;
         const uint8_t bytesLen = prefix - RLP_KIND_STRING_SHORT_MAX;
         const uint8_t *rlpLenPtr = NULL;
-        CHECK_ERROR(readBytes(ctx, &rlpLenPtr, bytesLen))
+        CHECK_ERROR_EVM(readBytes(ctx, &rlpLenPtr, bytesLen))
         rlp->rlpLen = 0;
         for (uint8_t i = 0; i < bytesLen; i++) {
             rlp->rlpLen <<= 8u;
             rlp->rlpLen += *(rlpLenPtr + i);
         }
-        CHECK_ERROR(readBytes(ctx, &rlp->ptr, rlp->rlpLen))
+        CHECK_ERROR_EVM(readBytes(ctx, &rlp->ptr, rlp->rlpLen))
 
     } else if (prefix <= RLP_KIND_LIST_SHORT_MAX) {
         rlp->kind = RLP_KIND_LIST;
@@ -85,13 +86,13 @@ parser_error_t rlp_read(parser_context_t *ctx, rlp_t *rlp) {
         rlp->kind = RLP_KIND_LIST;
         const uint8_t bytesLen = prefix - RLP_KIND_LIST_SHORT_MAX;
         const uint8_t *rlpLenPtr = NULL;
-        CHECK_ERROR(readBytes(ctx, &rlpLenPtr, bytesLen))
+        CHECK_ERROR_EVM(readBytes(ctx, &rlpLenPtr, bytesLen))
         rlp->rlpLen = 0;
         for (uint8_t i = 0; i < bytesLen; i++) {
             rlp->rlpLen <<= 8u;
             rlp->rlpLen += *(rlpLenPtr + i);
         }
-        CHECK_ERROR(readBytes(ctx, &rlp->ptr, rlp->rlpLen))
+        CHECK_ERROR_EVM(readBytes(ctx, &rlp->ptr, rlp->rlpLen))
     }
 
     return parser_ok;
@@ -123,10 +124,10 @@ parser_error_t rlp_readUInt256(const rlp_t *rlp, uint256_t *value) {
             break;
 
         default:
-            return parser_unexpected_type;
+            return parser_unexpected_value;
     }
 
     parser_context_t ctx = {.buffer = tmpBuffer, .bufferLen = sizeof(tmpBuffer), .offset = 0};
-    CHECK_ERROR(readu256BE(&ctx, value));
+    CHECK_ERROR_EVM(readu256BE(&ctx, value));
     return parser_ok;
 }

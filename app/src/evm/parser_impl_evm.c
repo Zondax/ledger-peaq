@@ -20,7 +20,8 @@
 #include <zxmacros.h>
 
 #include "app_mode.h"
-#include "crypto_helper.h"
+#include "crypto.h"
+#include "crypto_evm.h"
 #include "evm_erc20.h"
 #include "evm_utils.h"
 #include "parser_common.h"
@@ -42,10 +43,10 @@ static parser_error_t readChainID(parser_context_t *ctx, rlp_t *chainId) {
         return parser_unexpected_error;
     }
 
-    CHECK_ERROR(rlp_read(ctx, chainId));
+    CHECK_ERROR_EVM(rlp_read(ctx, chainId));
     uint64_t tmpChainId = 0;
     if (chainId->rlpLen > 0) {
-        CHECK_ERROR(be_bytes_to_u64(chainId->ptr, chainId->rlpLen, &tmpChainId))
+        CHECK_ERROR_EVM(be_bytes_to_u64(chainId->ptr, chainId->rlpLen, &tmpChainId))
     } else if (chainId->kind == RLP_KIND_BYTE) {
         // case were the prefix is the byte itself
         tmpChainId = chainId->ptr[0];
@@ -60,7 +61,7 @@ static parser_error_t readChainID(parser_context_t *ctx, rlp_t *chainId) {
         }
     }
 
-    return parser_invalid_chain_id;
+    return parser_not_supported;
 }
 
 static parser_error_t parse_legacy_tx(parser_context_t *ctx, eth_tx_t *tx_obj) {
@@ -68,12 +69,12 @@ static parser_error_t parse_legacy_tx(parser_context_t *ctx, eth_tx_t *tx_obj) {
         return parser_unexpected_error;
     }
 
-    CHECK_ERROR(rlp_read(ctx, &tx_obj->tx.nonce));
-    CHECK_ERROR(rlp_read(ctx, &(tx_obj->tx.gasPrice)));
-    CHECK_ERROR(rlp_read(ctx, &(tx_obj->tx.gasLimit)));
-    CHECK_ERROR(rlp_read(ctx, &(tx_obj->tx.to)));
-    CHECK_ERROR(rlp_read(ctx, &(tx_obj->tx.value)));
-    CHECK_ERROR(rlp_read(ctx, &(tx_obj->tx.data)));
+    CHECK_ERROR_EVM(rlp_read(ctx, &tx_obj->tx.nonce));
+    CHECK_ERROR_EVM(rlp_read(ctx, &(tx_obj->tx.gasPrice)));
+    CHECK_ERROR_EVM(rlp_read(ctx, &(tx_obj->tx.gasLimit)));
+    CHECK_ERROR_EVM(rlp_read(ctx, &(tx_obj->tx.to)));
+    CHECK_ERROR_EVM(rlp_read(ctx, &(tx_obj->tx.value)));
+    CHECK_ERROR_EVM(rlp_read(ctx, &(tx_obj->tx.data)));
 
     // Check for legacy no EIP155 which means no chain_id
     // There is not more data no eip155 compliant tx
@@ -86,39 +87,39 @@ static parser_error_t parse_legacy_tx(parser_context_t *ctx, eth_tx_t *tx_obj) {
 
     // Otherwise legacy EIP155 in which case should come with empty r and s values
     // Transaction comes with a chainID so it is EIP155 compliant
-    CHECK_ERROR(readChainID(ctx, &tx_obj->chainId));
+    CHECK_ERROR_EVM(readChainID(ctx, &tx_obj->chainId));
 
     // Check R and S fields
     rlp_t sig_r = {0};
-    CHECK_ERROR(rlp_read(ctx, &sig_r));
+    CHECK_ERROR_EVM(rlp_read(ctx, &sig_r));
 
     rlp_t sig_s = {0};
-    CHECK_ERROR(rlp_read(ctx, &sig_s));
+    CHECK_ERROR_EVM(rlp_read(ctx, &sig_s));
 
     // R and S values should be either 0 or 0x80
     if ((sig_r.rlpLen == 0 && sig_s.rlpLen == 0) ||
         ((sig_r.rlpLen == 1 && sig_s.rlpLen == 1) && !(*sig_r.ptr | *sig_s.ptr))) {
         return parser_ok;
     }
-    return parser_invalid_rs_values;
+    return parser_not_supported;
 }
 
 static parser_error_t parse_2930(parser_context_t *ctx, eth_tx_t *tx_obj) {
     if (ctx == NULL || tx_obj == NULL) {
         return parser_unexpected_error;
     }
-    CHECK_ERROR(readChainID(ctx, &tx_obj->chainId));
-    CHECK_ERROR(rlp_read(ctx, &tx_obj->tx.nonce));
-    CHECK_ERROR(rlp_read(ctx, &(tx_obj->tx.gasPrice)));
-    CHECK_ERROR(rlp_read(ctx, &(tx_obj->tx.gasLimit)));
-    CHECK_ERROR(rlp_read(ctx, &(tx_obj->tx.to)));
-    CHECK_ERROR(rlp_read(ctx, &(tx_obj->tx.value)));
-    CHECK_ERROR(rlp_read(ctx, &(tx_obj->tx.data)));
-    CHECK_ERROR(rlp_read(ctx, &(tx_obj->tx.access_list)));
+    CHECK_ERROR_EVM(readChainID(ctx, &tx_obj->chainId));
+    CHECK_ERROR_EVM(rlp_read(ctx, &tx_obj->tx.nonce));
+    CHECK_ERROR_EVM(rlp_read(ctx, &(tx_obj->tx.gasPrice)));
+    CHECK_ERROR_EVM(rlp_read(ctx, &(tx_obj->tx.gasLimit)));
+    CHECK_ERROR_EVM(rlp_read(ctx, &(tx_obj->tx.to)));
+    CHECK_ERROR_EVM(rlp_read(ctx, &(tx_obj->tx.value)));
+    CHECK_ERROR_EVM(rlp_read(ctx, &(tx_obj->tx.data)));
+    CHECK_ERROR_EVM(rlp_read(ctx, &(tx_obj->tx.access_list)));
 
     // R and S fields should be empty
     if (ctx->offset < ctx->bufferLen) {
-        return parser_unexpected_characters;
+        return parser_not_supported;
     }
 
     return parser_ok;
@@ -129,19 +130,19 @@ static parser_error_t parse_1559(parser_context_t *ctx, eth_tx_t *tx_obj) {
         return parser_unexpected_error;
     }
 
-    CHECK_ERROR(readChainID(ctx, &tx_obj->chainId));
-    CHECK_ERROR(rlp_read(ctx, &tx_obj->tx.nonce));
-    CHECK_ERROR(rlp_read(ctx, &(tx_obj->tx.max_priority_fee_per_gas)));
-    CHECK_ERROR(rlp_read(ctx, &(tx_obj->tx.max_fee_per_gas)));
-    CHECK_ERROR(rlp_read(ctx, &(tx_obj->tx.gasLimit)));
-    CHECK_ERROR(rlp_read(ctx, &(tx_obj->tx.to)));
-    CHECK_ERROR(rlp_read(ctx, &(tx_obj->tx.value)));
-    CHECK_ERROR(rlp_read(ctx, &(tx_obj->tx.data)));
-    CHECK_ERROR(rlp_read(ctx, &(tx_obj->tx.access_list)));
+    CHECK_ERROR_EVM(readChainID(ctx, &tx_obj->chainId));
+    CHECK_ERROR_EVM(rlp_read(ctx, &tx_obj->tx.nonce));
+    CHECK_ERROR_EVM(rlp_read(ctx, &(tx_obj->tx.max_priority_fee_per_gas)));
+    CHECK_ERROR_EVM(rlp_read(ctx, &(tx_obj->tx.max_fee_per_gas)));
+    CHECK_ERROR_EVM(rlp_read(ctx, &(tx_obj->tx.gasLimit)));
+    CHECK_ERROR_EVM(rlp_read(ctx, &(tx_obj->tx.to)));
+    CHECK_ERROR_EVM(rlp_read(ctx, &(tx_obj->tx.value)));
+    CHECK_ERROR_EVM(rlp_read(ctx, &(tx_obj->tx.data)));
+    CHECK_ERROR_EVM(rlp_read(ctx, &(tx_obj->tx.access_list)));
 
     // R and S fields should be empty
     if (ctx->offset < ctx->bufferLen) {
-        return parser_unexpected_characters;
+        return parser_not_supported;
     }
 
     return parser_ok;
@@ -165,7 +166,7 @@ static parser_error_t readTxnType(parser_context_t *ctx, eth_tx_type_e *type) {
 
     // Legacy tx type is greater than or equal to 0xc0.
     if (marker < legacy) {
-        return parser_unsupported_tx;
+        return parser_not_supported;
     }
 
     *type = legacy;
@@ -174,10 +175,10 @@ static parser_error_t readTxnType(parser_context_t *ctx, eth_tx_type_e *type) {
 
 parser_error_t _readEth(parser_context_t *ctx, eth_tx_t *tx_obj) {
     MEMZERO(&eth_tx_obj, sizeof(eth_tx_obj));
-    CHECK_ERROR(readTxnType(ctx, &tx_obj->tx_type))
+    CHECK_ERROR_EVM(readTxnType(ctx, &tx_obj->tx_type))
     // We expect a list with all the fields from the transaction
     rlp_t list = {0};
-    CHECK_ERROR(rlp_read(ctx, &list));
+    CHECK_ERROR_EVM(rlp_read(ctx, &list));
 
     // Check that the first RLP element is a list
     if (list.kind != RLP_KIND_LIST) {
@@ -186,7 +187,7 @@ parser_error_t _readEth(parser_context_t *ctx, eth_tx_t *tx_obj) {
 
     // All bytes must be read
     if (ctx->offset != ctx->bufferLen) {
-        return parser_unexpected_characters;
+        return parser_not_supported;
     }
 
     parser_context_t txCtx = {.buffer = list.ptr, .bufferLen = list.rlpLen, .offset = 0};
@@ -208,7 +209,7 @@ parser_error_t _readEth(parser_context_t *ctx, eth_tx_t *tx_obj) {
 
 parser_error_t _validateTxEth() {
     if (!validateERC20(&eth_tx_obj) && !app_mode_expert()) {
-        return parser_unsupported_tx;
+        return parser_not_supported;
     }
 
     return parser_ok;
@@ -255,48 +256,48 @@ static parser_error_t printERC20Transfer(const parser_context_t *ctx, uint8_t di
         case 0:
             snprintf(outKey, outKeyLen, "Receiver");
             rlp_t to = {.kind = RLP_KIND_STRING, .ptr = (eth_tx_obj.tx.data.ptr + 4 + 12), .rlpLen = ETH_ADDRESS_LEN};
-            CHECK_ERROR(printEVMAddress(&to, outVal, outValLen, pageIdx, pageCount));
+            CHECK_ERROR_EVM(printEVMAddress(&to, outVal, outValLen, pageIdx, pageCount));
             break;
 
         case 1:
             snprintf(outKey, outKeyLen, "Contract");
             rlp_t contractAddress = {.kind = RLP_KIND_STRING, .ptr = eth_tx_obj.tx.to.ptr, .rlpLen = ETH_ADDRESS_LEN};
-            CHECK_ERROR(printEVMAddress(&contractAddress, outVal, outValLen, pageIdx, pageCount));
+            CHECK_ERROR_EVM(printEVMAddress(&contractAddress, outVal, outValLen, pageIdx, pageCount));
             break;
 
         case 2:
             snprintf(outKey, outKeyLen, "Amount");
-            CHECK_ERROR(printERC20Value(&eth_tx_obj, outVal, outValLen, pageIdx, pageCount));
+            CHECK_ERROR_EVM(printERC20Value(&eth_tx_obj, outVal, outValLen, pageIdx, pageCount));
             break;
 
         case 3:
             snprintf(outKey, outKeyLen, "Nonce");
-            CHECK_ERROR(printRLPNumber(&eth_tx_obj.tx.nonce, outVal, outValLen, pageIdx, pageCount));
+            CHECK_ERROR_EVM(printRLPNumber(&eth_tx_obj.tx.nonce, outVal, outValLen, pageIdx, pageCount));
             break;
 
         case 4:
             snprintf(outKey, outKeyLen, "Max Priority Fee");
-            CHECK_ERROR(printRLPNumber(&eth_tx_obj.tx.max_priority_fee_per_gas, outVal, outValLen, pageIdx, pageCount));
+            CHECK_ERROR_EVM(printRLPNumber(&eth_tx_obj.tx.max_priority_fee_per_gas, outVal, outValLen, pageIdx, pageCount));
             break;
 
         case 5:
             snprintf(outKey, outKeyLen, "Max Fee");
-            CHECK_ERROR(printRLPNumber(&eth_tx_obj.tx.max_fee_per_gas, outVal, outValLen, pageIdx, pageCount));
+            CHECK_ERROR_EVM(printRLPNumber(&eth_tx_obj.tx.max_fee_per_gas, outVal, outValLen, pageIdx, pageCount));
             break;
 
         case 6:
             snprintf(outKey, outKeyLen, "Gas limit");
-            CHECK_ERROR(printRLPNumber(&eth_tx_obj.tx.gasLimit, outVal, outValLen, pageIdx, pageCount));
+            CHECK_ERROR_EVM(printRLPNumber(&eth_tx_obj.tx.gasLimit, outVal, outValLen, pageIdx, pageCount));
             break;
 
         case 7:
             snprintf(outKey, outKeyLen, "Gas price");
-            CHECK_ERROR(printRLPNumber(&eth_tx_obj.tx.gasPrice, outVal, outValLen, pageIdx, pageCount));
+            CHECK_ERROR_EVM(printRLPNumber(&eth_tx_obj.tx.gasPrice, outVal, outValLen, pageIdx, pageCount));
             break;
 
         case 8:
             snprintf(outKey, outKeyLen, "Value");
-            CHECK_ERROR(printRLPNumber(&eth_tx_obj.tx.value, outVal, outValLen, pageIdx, pageCount));
+            CHECK_ERROR_EVM(printRLPNumber(&eth_tx_obj.tx.value, outVal, outValLen, pageIdx, pageCount));
             break;
 
         case 9:
@@ -313,7 +314,7 @@ static parser_error_t printERC20Transfer(const parser_context_t *ctx, uint8_t di
             break;
 
         case 10:
-            CHECK_ERROR(printEthHash(ctx, outKey, outKeyLen, outVal, outValLen, pageIdx, pageCount));
+            CHECK_ERROR_EVM(printEthHash(ctx, outKey, outKeyLen, outVal, outValLen, pageIdx, pageCount));
             break;
 
         default:
@@ -350,11 +351,11 @@ static parser_error_t printGeneric(const parser_context_t *ctx, uint8_t displayI
         case 0:
             snprintf(outKey, outKeyLen, "To");
             rlp_t contractAddress = {.kind = RLP_KIND_STRING, .ptr = eth_tx_obj.tx.to.ptr, .rlpLen = ETH_ADDRESS_LEN};
-            CHECK_ERROR(printEVMAddress(&contractAddress, outVal, outValLen, pageIdx, pageCount));
+            CHECK_ERROR_EVM(printEVMAddress(&contractAddress, outVal, outValLen, pageIdx, pageCount));
             break;
         case 1:
             snprintf(outKey, outKeyLen, "Value");
-            CHECK_ERROR(printRLPNumber(&eth_tx_obj.tx.value, outVal, outValLen, pageIdx, pageCount));
+            CHECK_ERROR_EVM(printRLPNumber(&eth_tx_obj.tx.value, outVal, outValLen, pageIdx, pageCount));
             break;
 
         case 2:
@@ -372,31 +373,31 @@ static parser_error_t printGeneric(const parser_context_t *ctx, uint8_t displayI
 
         case 3:
             snprintf(outKey, outKeyLen, "Max Priority Fee");
-            CHECK_ERROR(printRLPNumber(&eth_tx_obj.tx.max_priority_fee_per_gas, outVal, outValLen, pageIdx, pageCount));
+            CHECK_ERROR_EVM(printRLPNumber(&eth_tx_obj.tx.max_priority_fee_per_gas, outVal, outValLen, pageIdx, pageCount));
             break;
 
         case 4:
             snprintf(outKey, outKeyLen, "Max Fee");
-            CHECK_ERROR(printRLPNumber(&eth_tx_obj.tx.max_fee_per_gas, outVal, outValLen, pageIdx, pageCount));
+            CHECK_ERROR_EVM(printRLPNumber(&eth_tx_obj.tx.max_fee_per_gas, outVal, outValLen, pageIdx, pageCount));
             break;
 
         case 5:
             snprintf(outKey, outKeyLen, "Gas limit");
-            CHECK_ERROR(printRLPNumber(&eth_tx_obj.tx.gasLimit, outVal, outValLen, pageIdx, pageCount));
+            CHECK_ERROR_EVM(printRLPNumber(&eth_tx_obj.tx.gasLimit, outVal, outValLen, pageIdx, pageCount));
             break;
 
         case 6:
             snprintf(outKey, outKeyLen, "Gas price");
-            CHECK_ERROR(printRLPNumber(&eth_tx_obj.tx.gasPrice, outVal, outValLen, pageIdx, pageCount));
+            CHECK_ERROR_EVM(printRLPNumber(&eth_tx_obj.tx.gasPrice, outVal, outValLen, pageIdx, pageCount));
             break;
 
         case 7:
             snprintf(outKey, outKeyLen, "Nonce");
-            CHECK_ERROR(printRLPNumber(&eth_tx_obj.tx.nonce, outVal, outValLen, pageIdx, pageCount));
+            CHECK_ERROR_EVM(printRLPNumber(&eth_tx_obj.tx.nonce, outVal, outValLen, pageIdx, pageCount));
             break;
 
         case 8:
-            CHECK_ERROR(printEthHash(ctx, outKey, outKeyLen, outVal, outValLen, pageIdx, pageCount));
+            CHECK_ERROR_EVM(printEthHash(ctx, outKey, outKeyLen, outVal, outValLen, pageIdx, pageCount));
             break;
 
         default:
@@ -415,7 +416,7 @@ parser_error_t _getItemEth(const parser_context_t *ctx, uint8_t displayIdx, char
         return printGeneric(ctx, displayIdx, outKey, outKeyLen, outVal, outValLen, pageIdx, pageCount);
     }
 
-    return parser_unsupported_tx;
+    return parser_not_supported;
 }
 
 // returns the number of items to display on the screen.
@@ -465,7 +466,7 @@ parser_error_t _computeV(parser_context_t *ctx, eth_tx_t *tx_obj, unsigned int i
 
     } else {
         uint64_t id = 0;
-        CHECK_ERROR(be_bytes_to_u64(tx_obj->chainId.ptr, tx_obj->chainId.rlpLen, &id));
+        CHECK_ERROR_EVM(be_bytes_to_u64(tx_obj->chainId.ptr, tx_obj->chainId.rlpLen, &id));
 
         uint32_t cv = 35 + parity;
         cv = saturating_add_u32(cv, (uint32_t)id * 2);

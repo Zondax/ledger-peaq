@@ -1,5 +1,5 @@
 /*******************************************************************************
- *  (c) 2018 - 2024 Zondax AG
+ *   (c) 2018 - 2024 Zondax AG
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -16,43 +16,44 @@
 
 #include "parser_impl.h"
 
-parser_error_t _read(parser_context_t *c, parser_tx_t *v) {
-    UNUSED(c);
-    UNUSED(v);
-    return parser_ok;
-}
+#include <zxformat.h>
+#include <zxmacros.h>
 
-const char *parser_getErrorDescription(parser_error_t err) {
-    switch (err) {
-        case parser_ok:
-            return "No error";
-        case parser_no_data:
-            return "No more data";
-        case parser_init_context_empty:
-            return "Initialized empty context";
-        case parser_unexpected_buffer_end:
-            return "Unexpected buffer end";
-        case parser_unexpected_version:
-            return "Unexpected version";
-        case parser_unexpected_characters:
-            return "Unexpected characters";
-        case parser_unexpected_field:
-            return "Unexpected field";
-        case parser_duplicated_field:
-            return "Unexpected duplicated field";
-        case parser_value_out_of_range:
-            return "Value out of range";
-        case parser_unexpected_chain:
-            return "Unexpected chain";
-        case parser_missing_field:
-            return "missing field";
+#include "bignum.h"
+#include "coin.h"
+#include "crypto_helper.h"
+#include "parser_txdef.h"
+#include "substrate_dispatch.h"
+#include "substrate_types.h"
 
-        case parser_display_idx_out_of_range:
-            return "display index out of range";
-        case parser_display_page_out_of_range:
-            return "display page out of range";
+extern uint16_t __address_type;
 
-        default:
-            return "Unrecognized error code";
+parser_error_t _readTx(parser_context_t *c, parser_tx_t *v) {
+    CHECK_INPUT()
+
+    // Reverse parse to retrieve spec before forward parsing
+    CHECK_ERROR(_checkVersions(c))
+
+    // Now forward parse
+    CHECK_ERROR(_readCallIndex(c, &v->callIndex))
+    CHECK_ERROR(_readMethod(c, v->callIndex.moduleIdx, v->callIndex.idx, &v->method))
+    CHECK_ERROR(_readEra(c, &v->era))
+    CHECK_ERROR(_readCompactIndex(c, &v->nonce))
+    CHECK_ERROR(_readCompactBalance(c, &v->tip))
+    CHECK_ERROR(_readUInt32(c, &v->specVersion))
+    CHECK_ERROR(_readUInt32(c, &v->transactionVersion))
+    CHECK_ERROR(_readHash(c, &v->genesisHash))
+    CHECK_ERROR(_readHash(c, &v->blockHash))
+
+    if (c->offset < c->bufferLen) {
+        return parser_unexpected_unparsed_bytes;
     }
+
+    if (c->offset > c->bufferLen) {
+        return parser_unexpected_buffer_end;
+    }
+
+    __address_type = _detectAddressType(c);
+
+    return parser_ok;
 }

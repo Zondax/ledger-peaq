@@ -1,6 +1,5 @@
-
 /*******************************************************************************
- *   (c) 2019 Zondax GmbH
+ *   (c) 2018 - 2024 Zondax AG
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -14,29 +13,27 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  ********************************************************************************/
+
 #pragma once
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include <stdint.h>
+#include <sigutils.h>
+#include <stdbool.h>
+#include <zxmacros.h>
 
+#include "coin.h"
 #include "zxerror.h"
 
-#define KECCAK_256_SIZE 32
+#define SS58_BLAKE_PREFIX     (const unsigned char *)"SS58PRE"
+#define SS58_BLAKE_PREFIX_LEN 7
+#define SS58_ADDRESS_MAX_LEN  60u
 
-#define CHECK_CX_OK(CALL)         \
-    do {                          \
-        cx_err_t __cx_err = CALL; \
-        if (__cx_err != CX_OK) {  \
-            return zxerr_unknown; \
-        }                         \
-    } while (0)
+uint8_t crypto_SS58CalculatePrefix(uint16_t addressType, uint8_t *prefixBytes);
 
-extern uint8_t peaq_chain_code;
-
-zxerr_t keccak_digest(const unsigned char *in, unsigned int inLen, unsigned char *out, unsigned int outLen);
+uint16_t crypto_SS58EncodePubkey(uint8_t *buffer, uint16_t buffer_len, uint16_t addressType, const uint8_t *pubkey);
 
 #ifdef __cplusplus
 }

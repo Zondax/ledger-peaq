@@ -96,7 +96,7 @@ zxerr_t tx_getNumItems(uint8_t *num_items) {
     parser_error_t err = parser_getNumItems(&ctx_parsed_tx, num_items);
 
     if (err != parser_ok) {
-        return zxerr_unknown;
+        return zxerr_no_data;
     }
 
     return zxerr_ok;
@@ -108,7 +108,7 @@ zxerr_t tx_getItem(int8_t displayIdx, char *outKey, uint16_t outKeyLen, char *ou
 
     CHECK_ZXERR(tx_getNumItems(&numItems))
 
-    if (displayIdx > numItems) {
+    if (displayIdx < 0 || displayIdx >= numItems) {
         return zxerr_no_data;
     }
 

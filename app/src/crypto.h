@@ -22,15 +22,21 @@ extern "C" {
 
 #include <sigutils.h>
 #include <stdbool.h>
+#include <zxmacros.h>
 
 #include "coin.h"
 #include "zxerror.h"
 
+#define PREFIX_SIGNATURE_TYPE_ED25519 0
+#define PREFIX_SIGNATURE_TYPE_EDCSA   2
+#define MIN_BUFFER_LENGTH             235
+#define START_BUFFER                  33
+
 extern uint32_t hdPath[HDPATH_LEN_DEFAULT];
-extern uint32_t hdPath_len;
 
 zxerr_t crypto_fillAddress(uint8_t *buffer, uint16_t bufferLen, uint16_t *addrResponseLen);
-zxerr_t crypto_sign(uint8_t *signature, uint16_t signatureMaxlen, const uint8_t *message, uint16_t messageLen);
+
+zxerr_t crypto_sign_ed25519(uint8_t *signature, uint16_t signatureMaxlen, const uint8_t *message, uint16_t messageLen);
 
 #ifdef __cplusplus
 }

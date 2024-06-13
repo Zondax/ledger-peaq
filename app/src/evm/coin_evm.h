@@ -39,6 +39,7 @@ extern "C" {
 #define INS_SIGN_ETH            0x04
 #define INS_GET_ADDR_ETH        0x02
 
+#define COIN_DECIMALS           18
 #define VIEW_ADDRESS_OFFSET_ETH (SECP256K1_PK_LEN + 1 + 1)
 
 #ifdef __cplusplus

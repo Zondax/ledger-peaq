@@ -44,7 +44,7 @@ static parser_error_t readChainID(parser_context_t *ctx, rlp_t *chainId) {
 
     CHECK_ERROR(rlp_read(ctx, chainId));
     uint64_t tmpChainId = 0;
-    if (chainId->rlpLen > 0) {
+    if (chainId->rlpLen > 1) {
         CHECK_ERROR(be_bytes_to_u64(chainId->ptr, chainId->rlpLen, &tmpChainId))
     } else if (chainId->kind == RLP_KIND_BYTE) {
         // case were the prefix is the byte itself
@@ -354,7 +354,8 @@ static parser_error_t printGeneric(const parser_context_t *ctx, uint8_t displayI
             break;
         case 1:
             snprintf(outKey, outKeyLen, "Value");
-            CHECK_ERROR(printRLPNumber(&eth_tx_obj.tx.value, outVal, outValLen, pageIdx, pageCount));
+            printBigIntFixedPoint(eth_tx_obj.tx.value.ptr, eth_tx_obj.tx.value.rlpLen, outVal, outValLen, pageIdx, pageCount,
+                                  COIN_DECIMALS);
             break;
 
         case 2:

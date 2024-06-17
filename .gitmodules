@@ -13,6 +13,6 @@
 [submodule "deps/stax-secure-sdk"]
 	path = deps/stax-secure-sdk
 	url = https://github.com/LedgerHQ/ledger-secure-sdk
-[submodule "ledger-peaq-js"]
+[submodule "js"]
 	path = js
 	url = https://github.com/Zondax/ledger-peaq-js

@@ -44,10 +44,10 @@ extern "C" {
 #define COIN_AMOUNT_DECIMAL_PLACES    6
 #define COIN_TICKER                   "PEAQ "
 
-#define MENU_MAIN_APP_LINE1           "Peaq"
+#define MENU_MAIN_APP_LINE1           "peaq"
 #define MENU_MAIN_APP_LINE2           "Ready"
 #define MENU_MAIN_APP_LINE2_SECRET    "???"
-#define APPVERSION_LINE1              "Peaq"
+#define APPVERSION_LINE1              "peaq"
 #define APPVERSION_LINE2              "v" APPVERSION
 
 #ifdef __cplusplus

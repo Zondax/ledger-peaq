@@ -1,4 +1,4 @@
-# Peaq App
+# peaq App
 
 ## General structure
 

@@ -53,7 +53,7 @@ include $(CURDIR)/Makefile.version
 $(info COIN  = [$(COIN)])
 
 ifeq ($(COIN),PEAQ)
-APPNAME = "Peaq"
+APPNAME = "peaq"
 APPPATH = "44'/60'"
 else
 define error_message

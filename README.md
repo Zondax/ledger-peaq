@@ -1,4 +1,4 @@
-# Ledger Peaq app
+# Ledger peaq app
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![GithubActions](https://github.com/Zondax/ledger-peaq/actions/workflows/main.yml/badge.svg)](https://github.com/Zondax/ledger-peaq/blob/main/.github/workflows/main.yaml)
 
@@ -11,9 +11,9 @@ _Please visit our website at [zondax.ch](https://www.zondax.ch)_
 
 ---
 
-This project contains the Peaq app for Ledger Nano S Nano S+ and X.
+This project contains the peaq app for Ledger Nano S Nano S+ and X.
 
-- Ledger Nano S/S+/X Peaq app
+- Ledger Nano S/S+/X peaq app
 - Specs / Documentation
 - C++ unit tests
 - Zemu tests

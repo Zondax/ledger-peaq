@@ -112,7 +112,8 @@ jobs:
 
       - name: Build NanoS
         shell: bash -l {0}
-        run: make
+        run: |
+          make
           mv ./app/pkg/installer_s.sh ./app/pkg/installer_nanos.sh
       - name: Set tag
         id: nanos
@@ -147,7 +148,8 @@ jobs:
 
       - name: Build NanoSP
         shell: bash -l {0}
-        run: make
+        run: |
+          make
           mv ./app/pkg/installer_s2.sh ./app/pkg/installer_nanos_plus.sh
       - name: Set tag
         id: nanosp
@@ -162,6 +164,7 @@ jobs:
           tag_name: ${{ steps.nanosp.outputs.tag_name }}
           draft: false
           prerelease: false
+
   build_package_stax:
     needs: [configure, build, build_ledger, test_zemu]
     if: ${{ github.ref == 'refs/heads/main' }}

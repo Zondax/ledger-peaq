@@ -59,8 +59,7 @@ zxerr_t crypto_extractUncompressedPublicKey(uint8_t *pubKey, uint16_t pubKeyLen,
     zxerr_t error = zxerr_unknown;
 
     // Generate keys
-    CATCH_CXERROR(os_derive_bip32_with_seed_no_throw(HDW_NORMAL, CX_CURVE_256K1, hdPathEth, hdPathEth_len, privateKeyData,
-                                                     chainCode, NULL, 0));
+    CATCH_CXERROR(os_derive_bip32_no_throw(CX_CURVE_256K1, hdPathEth, hdPathEth_len, privateKeyData, chainCode));
 
     CATCH_CXERROR(cx_ecfp_init_private_key_no_throw(CX_CURVE_256K1, privateKeyData, 32, &cx_privateKey));
     CATCH_CXERROR(cx_ecfp_init_public_key_no_throw(CX_CURVE_256K1, NULL, 0, &cx_publicKey));

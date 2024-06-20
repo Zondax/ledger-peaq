@@ -24,6 +24,9 @@
 #include "zxerror.h"
 #include "zxformat.h"
 
+#define RLP_MARKER_VAL_1 0xC0
+#define RLP_MARKER_VAL_2 0xF7
+
 #define CHECK_RLP_LEN(BUFF_LEN, RLP_LEN)            \
     {                                               \
         uint64_t buff_len = BUFF_LEN;               \
@@ -91,7 +94,7 @@ rlp_error_t get_tx_rlp_len(const uint8_t *buffer, uint32_t len, uint64_t *read, 
     // get rlp marker
     uint8_t marker = data[offset];
 
-    if ((marker - 0xC0) * (marker - 0xF7) <= 0) {
+    if ((marker - RLP_MARKER_VAL_1) * (marker - RLP_MARKER_VAL_2) <= 0) {
         *read += 1;
         uint8_t l = marker - 0xC0;
         *to_read = l;
@@ -106,7 +109,7 @@ rlp_error_t get_tx_rlp_len(const uint8_t *buffer, uint32_t len, uint64_t *read, 
         // The number of bytes that compose the length is encoded
         // in the marker
         // And then the length is just the number BE encoded
-        uint64_t num_bytes = (marker - 0xF7);
+        uint64_t num_bytes = (marker - RLP_MARKER_VAL_2);
 
         uint64_t num;
         if (be_bytes_to_u64(&data[offset], num_bytes, &num) != 0) return rlp_invalid_data;

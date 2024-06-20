@@ -18,6 +18,7 @@
 
 #include "zxformat.h"
 
+#define EVM_SELECTOR_LENGTH 4
 // Prefix is calculated as: keccak256("transfer(address,uint256)") = 0xa9059cbb
 const uint8_t ERC20_TRANSFER_PREFIX[] = {0xa9, 0x05, 0x9c, 0xbb};
 
@@ -31,7 +32,7 @@ const erc20_tokens_t supportedTokens[] = {{{0xa8, 0x10, 0xac, 0xb7, 0xcc, 0xdc, 
 
 parser_error_t getERC20Token(const eth_tx_t *ethObj, char tokenSymbol[MAX_SYMBOL_LEN], uint8_t *decimals) {
     if (ethObj == NULL || tokenSymbol == NULL || decimals == NULL || ethObj->tx.data.rlpLen != ERC20_DATA_LENGTH ||
-        memcmp(ethObj->tx.data.ptr, ERC20_TRANSFER_PREFIX, 4) != 0) {
+        memcmp(ethObj->tx.data.ptr, ERC20_TRANSFER_PREFIX, EVM_SELECTOR_LENGTH) != 0) {
         return parser_unexpected_value;
     }
 

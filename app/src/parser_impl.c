@@ -16,12 +16,6 @@
 
 #include "parser_impl.h"
 
-parser_error_t _read(parser_context_t *c, parser_tx_t *v) {
-    UNUSED(c);
-    UNUSED(v);
-    return parser_ok;
-}
-
 const char *parser_getErrorDescription(parser_error_t err) {
     switch (err) {
         case parser_ok:

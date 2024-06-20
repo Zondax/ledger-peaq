@@ -27,20 +27,6 @@
 
 extern uint16_t action_addrResponseLen;
 
-__Z_INLINE zxerr_t app_fill_address() {
-    // Put data directly in the apdu buffer
-    MEMZERO(G_io_apdu_buffer, IO_APDU_BUFFER_SIZE);
-
-    action_addrResponseLen = 0;
-    const zxerr_t err = crypto_fillAddress(G_io_apdu_buffer, IO_APDU_BUFFER_SIZE, &action_addrResponseLen);
-
-    if (err != zxerr_ok || action_addrResponseLen == 0) {
-        THROW(APDU_CODE_EXECUTION_ERROR);
-    }
-
-    return zxerr_ok;
-}
-
 __Z_INLINE zxerr_t app_fill_eth_address() {
     // Put data directly in the apdu buffer
     MEMZERO(G_io_apdu_buffer, IO_APDU_BUFFER_SIZE);
@@ -55,6 +41,7 @@ __Z_INLINE zxerr_t app_fill_eth_address() {
     return zxerr_ok;
 }
 
+// For future use
 __Z_INLINE void app_sign() {
     const uint8_t *message = tx_get_buffer();
     const uint16_t messageLength = tx_get_buffer_length();

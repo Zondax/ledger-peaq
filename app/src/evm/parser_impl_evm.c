@@ -148,7 +148,7 @@ static parser_error_t parse_1559(parser_context_t *ctx, eth_tx_t *tx_obj) {
 }
 
 static parser_error_t readTxnType(parser_context_t *ctx, eth_tx_type_e *type) {
-    if (ctx == NULL || type == NULL || ctx->bufferLen == 0 || ctx->offset != 0) {
+    if (ctx == NULL || type == NULL || ctx->bufferLen == 0) {
         return parser_unexpected_error;
     }
     // Check first byte:

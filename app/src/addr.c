@@ -21,6 +21,10 @@
 #include "zxmacros.h"
 
 zxerr_t addr_getNumItems(uint8_t *num_items) {
+    if (*num_items == 0) {
+        return zxerr_no_data;
+    }
+
     zemu_log_stack("addr_getNumItems");
     *num_items = 1;
     if (app_mode_expert()) {

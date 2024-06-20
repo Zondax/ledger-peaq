@@ -92,7 +92,7 @@ bool validateERC20(eth_tx_t *ethObj) {
         return false;
     }
     // Check that data start with ERC20 prefix
-    if (ethObj == NULL || ethObj->tx.to.rlpLen != ETH_ADDRESS_LEN || ethObj->tx.data.ptr == NULL ||
+    if (ethObj->tx.to.rlpLen != ETH_ADDRESS_LEN || ethObj->tx.data.ptr == NULL ||
         ethObj->tx.data.rlpLen != ERC20_DATA_LENGTH ||
         memcmp(ethObj->tx.data.ptr, ERC20_TRANSFER_PREFIX, sizeof(ERC20_TRANSFER_PREFIX)) != 0) {
         ethObj->is_erc20_transfer = false;

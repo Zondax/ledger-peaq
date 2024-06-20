@@ -56,11 +56,17 @@ parser_error_t parser_getNumItemsEth(const parser_context_t *ctx, uint8_t *num_i
     return parser_ok;
 }
 
-static void cleanOutput(char *outKey, uint16_t outKeyLen, char *outVal, uint16_t outValLen) {
+static parser_error_t cleanOutput(char *outKey, uint16_t outKeyLen, char *outVal, uint16_t outValLen) {
+    if (outKeyLen == 0 || outValLen == 0) {
+        return parser_no_data;
+    };
+
     MEMZERO(outKey, outKeyLen);
     MEMZERO(outVal, outValLen);
     snprintf(outKey, outKeyLen, "?");
     snprintf(outVal, outValLen, " ");
+
+    return parser_ok;
 }
 
 static parser_error_t checkSanity(uint8_t numItems, uint8_t displayIdx) {
@@ -77,7 +83,7 @@ parser_error_t parser_getItemEth(const parser_context_t *ctx, uint8_t displayIdx
     CHECK_APP_CANARY()
 
     CHECK_ERROR(checkSanity(numItems, displayIdx))
-    cleanOutput(outKey, outKeyLen, outVal, outValLen);
+    CHECK_ERROR(cleanOutput(outKey, outKeyLen, outVal, outValLen));
 
     return _getItemEth(ctx, displayIdx, outKey, outKeyLen, outVal, outValLen, pageIdx, pageCount);
 }

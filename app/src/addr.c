@@ -35,6 +35,10 @@ zxerr_t addr_getNumItems(uint8_t *num_items) {
 
 zxerr_t addr_getItem(int8_t displayIdx, char *outKey, uint16_t outKeyLen, char *outVal, uint16_t outValLen, uint8_t pageIdx,
                      uint8_t *pageCount) {
+    if (outKey == NULL || outVal == NULL || pageCount == NULL) {
+        return zxerr_no_data;
+    }
+
     ZEMU_LOGF(50, "[addr_getItem] %d/%d\n", displayIdx, pageIdx)
 
     switch (displayIdx) {

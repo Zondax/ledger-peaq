@@ -57,7 +57,7 @@ parser_error_t parser_getNumItemsEth(const parser_context_t *ctx, uint8_t *num_i
 }
 
 static parser_error_t cleanOutput(char *outKey, uint16_t outKeyLen, char *outVal, uint16_t outValLen) {
-    if (outKeyLen == 0 || outValLen == 0) {
+    if (outKey == NULL || outVal == NULL || outKeyLen == 0 || outValLen == 0) {
         return parser_no_data;
     };
 

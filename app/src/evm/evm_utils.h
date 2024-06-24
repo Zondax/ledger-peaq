@@ -26,6 +26,8 @@
 extern "C" {
 #endif
 
+#define TMP_DATA_ARRAY_SIZE   40
+#define ERC20_TRANSFER_OFFSET 4 + 12
 typedef enum RlpError {
     rlp_ok = 0,
     rlp_no_data,

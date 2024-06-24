@@ -142,7 +142,7 @@ void check_testcase(const testcase_t &tc, bool expert_mode, bool is_eth) {
     }
     ASSERT_EQ(err, parser_ok) << parser_getErrorDescription(err);
 
-    auto output = dumpUI(&ctx, 39, 39, is_eth);
+    auto output = dumpUI(&ctx, 39, 39);
 
     std::cout << std::endl;
     for (const auto &i : output) {

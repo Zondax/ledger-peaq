@@ -148,7 +148,7 @@ static parser_error_t parse_1559(parser_context_t *ctx, eth_tx_t *tx_obj) {
 }
 
 static parser_error_t readTxnType(parser_context_t *ctx, eth_tx_type_e *type) {
-    if (ctx == NULL || type == NULL || ctx->bufferLen == 0 || ctx->offset != 0) {
+    if (ctx == NULL || type == NULL || ctx->bufferLen == 0) {
         return parser_unexpected_error;
     }
     // Check first byte:
@@ -250,11 +250,12 @@ static parser_error_t printERC20Transfer(const parser_context_t *ctx, uint8_t di
         displayIdx += 2;
     }
 
-    char data_array[40] = {0};
+    char data_array[TMP_DATA_ARRAY_SIZE] = {0};
     switch (displayIdx) {
         case 0:
             snprintf(outKey, outKeyLen, "Receiver");
-            rlp_t to = {.kind = RLP_KIND_STRING, .ptr = (eth_tx_obj.tx.data.ptr + 4 + 12), .rlpLen = ETH_ADDRESS_LEN};
+            rlp_t to = {
+                .kind = RLP_KIND_STRING, .ptr = (eth_tx_obj.tx.data.ptr + ERC20_TRANSFER_OFFSET), .rlpLen = ETH_ADDRESS_LEN};
             CHECK_ERROR(printEVMAddress(&to, outVal, outValLen, pageIdx, pageCount));
             break;
 
@@ -332,7 +333,7 @@ static parser_error_t printGeneric(const parser_context_t *ctx, uint8_t displayI
     MEMZERO(outVal, outValLen);
     *pageCount = 1;
 
-    char data_array[40] = {0};
+    char data_array[TMP_DATA_ARRAY_SIZE] = {0};
 
     if ((displayIdx >= 2 && eth_tx_obj.tx.data.rlpLen == 0) || eth_tx_obj.tx.to.rlpLen == 0) {
         displayIdx += 1;

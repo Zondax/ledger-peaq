@@ -25,8 +25,6 @@
 extern "C" {
 #endif
 
-parser_error_t _read(parser_context_t *c, parser_tx_t *v);
-
 #ifdef __cplusplus
 }
 #endif

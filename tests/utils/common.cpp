@@ -18,16 +18,13 @@
 #include <sstream>
 #include <string>
 
-std::vector<std::string> dumpUI(parser_context_t *ctx, uint16_t maxKeyLen, uint16_t maxValueLen, bool is_eth) {
+std::vector<std::string> dumpUI(parser_context_t *ctx, uint16_t maxKeyLen, uint16_t maxValueLen) {
     auto answer = std::vector<std::string>();
 
     uint8_t numItems;
     parser_error_t err = parser_ok;
-    if (is_eth) {
-        err = parser_getNumItemsEth(ctx, &numItems);
-    } else {
-        err = parser_getNumItems(ctx, &numItems);
-    }
+
+    err = parser_getNumItemsEth(ctx, &numItems);
 
     if (err != parser_ok) {
         return answer;
@@ -42,11 +39,8 @@ std::vector<std::string> dumpUI(parser_context_t *ctx, uint16_t maxKeyLen, uint1
         while (pageIdx < pageCount) {
             std::stringstream ss;
 
-            if (is_eth) {
-                err = parser_getItemEth(ctx, idx, keyBuffer, maxKeyLen, valueBuffer, maxValueLen, pageIdx, &pageCount);
-            } else {
-                err = parser_getItem(ctx, idx, keyBuffer, maxKeyLen, valueBuffer, maxValueLen, pageIdx, &pageCount);
-            }
+            err = parser_getItemEth(ctx, idx, keyBuffer, maxKeyLen, valueBuffer, maxValueLen, pageIdx, &pageCount);
+
             ss << idx << " | " << keyBuffer;
             if (pageCount > 1) {
                 ss << " [" << (int)pageIdx + 1 << "/" << (int)pageCount << "]";

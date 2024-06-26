@@ -1,5 +1,5 @@
 /*******************************************************************************
- *  (c) 2018 - 2024 Zondax AG
+ *  (c) 2019 - 2024  Zondax AG
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ extern "C" {
 
 #include "parser_txdef.h"
 
-#define CHECK_ERROR(__CALL)                   \
+#define CHECK_PARSER_ERR(__CALL)              \
     {                                         \
         parser_error_t __err = __CALL;        \
         CHECK_APP_CANARY()                    \
@@ -39,28 +39,28 @@ typedef enum {
     parser_display_idx_out_of_range,
     parser_display_page_out_of_range,
     parser_unexpected_error,
-
-    // Coin generic
-    parser_unexpected_type,
-    parser_unexpected_method,
+    // Coin specific
+    parser_unexpected_address_type,
+    parser_spec_not_supported,
+    parser_tx_version_not_supported,
+    parser_not_allowed,
+    parser_not_supported,
     parser_unexpected_buffer_end,
     parser_unexpected_value,
-    parser_unexpected_number_items,
-    parser_unexpected_version,
-    parser_unexpected_characters,
-    parser_unexpected_field,
-    parser_duplicated_field,
     parser_value_out_of_range,
-    parser_invalid_address,
-    parser_unexpected_chain,
-    parser_missing_field,
-    paser_unknown_transaction,
-
-    parser_unsupported_tx,
-    parser_invalid_rs_values,
-    parser_invalid_chain_id,
-    parser_not_supported_parser,
-    parser_not_supported_validation,
+    parser_value_too_many_bytes,
+    parser_unexpected_module,
+    parser_unexpected_callIndex,
+    parser_unexpected_unparsed_bytes,
+    parser_print_not_supported,
+    parser_tx_nesting_not_supported,
+    parser_tx_nesting_limit_reached,
+    parser_tx_call_vec_too_large,
+    // Swap specific
+    parser_swap_tx_wrong_method,
+    parser_swap_tx_wrong_method_args_num,
+    parser_swap_tx_wrong_dest_addr,
+    parser_swap_tx_wrong_amount,
 } parser_error_t;
 
 typedef struct {

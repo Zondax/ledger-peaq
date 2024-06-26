@@ -1,5 +1,5 @@
 /*******************************************************************************
- *  (c) 2018 - 2024 Zondax AG
+ *  (c) 2024 Zondax GmbH
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,10 +22,34 @@ extern "C" {
 #include <stddef.h>
 #include <stdint.h>
 
+#include "substrate_methods.h"
+
+#if defined(TARGET_NANOX) || defined(TARGET_NANOS2) || defined(TARGET_STAX)
+#define MAX_CALL_NESTING_SIZE 6
+#define MAX_CALL_VEC_SIZE     6
+#else
+#define MAX_CALL_NESTING_SIZE 2
+#define MAX_CALL_VEC_SIZE     5
+#endif
+
 typedef struct {
-    uint8_t txn_param_0;
-    uint8_t txn_param_1;
-    uint8_t txn_param_N;
+    pd_CallIndex_t callIndex;
+    pd_Method_t method;
+
+    pd_ExtrinsicEra_t era;
+    pd_CompactIndex_t nonce;
+    pd_CompactBalance_t tip;
+    pd_Compactu32_t appId;
+
+    pd_Compactu64_t dataAvailability;
+
+    uint32_t specVersion;
+    uint32_t transactionVersion;
+
+    pd_Hash_t genesisHash;
+    pd_Hash_t blockHash;
+
+    pd_NestCallIdx_t nestCallIdx;
 } parser_tx_t;
 
 #ifdef __cplusplus

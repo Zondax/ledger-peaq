@@ -59,7 +59,7 @@ ifeq ($(COIN),PEAQ)
 # Main app configuration
 DEFINES += APP_STANDARD
 APPNAME = "peaq"
-APPPATH = "44'/354'" --path "44'/354'"
+APPPATH = "44'/60'" --path "44'/354'"
 else
 define error_message
 

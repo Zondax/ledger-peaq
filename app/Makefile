@@ -1,6 +1,6 @@
 #*******************************************************************************
 #  Ledger App
-#  (c) 2018 - 2024 Zondax AG
+#  (c) 2019 - 2024 Zondax AG
 #  (c) 2017 Ledger
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,8 +26,8 @@ include $(CURDIR)/../deps/ledger-zxlib/makefiles/Makefile.installer_script
 
 include $(BOLOS_SDK)/Makefile.defines
 
-# Set the default value for PRODUCTION_BUILD to 0 if not already defined
-PRODUCTION_BUILD ?= 0
+PRODUCTION_BUILD ?= 1
+SUBSTRATE_PARSER_FULL ?= 1
 
 $(info ************ TARGET_NAME  = [$(TARGET_NAME)])
 
@@ -37,12 +37,15 @@ ifeq ($(PRODUCTION_BUILD), 1)
 else
     $(info ************ PRODUCTION_BUILD  = [INTERNAL USE])
 endif
-
 # Add the PRODUCTION_BUILD definition to the compiler flags
 DEFINES += PRODUCTION_BUILD=$(PRODUCTION_BUILD)
 
-
 include $(CURDIR)/../deps/ledger-zxlib/makefiles/Makefile.app_testing
+
+ifeq ($(SUBSTRATE_PARSER_FULL),1)
+DEFINES += SUBSTRATE_PARSER_FULL
+$(info ************ FULL PARSER ENABLED ************)
+endif
 
 ifndef COIN
 COIN=PEAQ
@@ -53,8 +56,10 @@ include $(CURDIR)/Makefile.version
 $(info COIN  = [$(COIN)])
 
 ifeq ($(COIN),PEAQ)
+# Main app configuration
+DEFINES += APP_STANDARD
 APPNAME = "peaq"
-APPPATH = "44'/60'"
+APPPATH = "44'/354'" --path "44'/354'"
 else
 define error_message
 
@@ -64,7 +69,7 @@ endef
 $(error "$(error_message)")
 endif
 
-APP_LOAD_PARAMS =  --curve secp256k1 --delete $(COMMON_LOAD_PARAMS) --path $(APPPATH)
+APP_LOAD_PARAMS = --curve ed25519 --curve secp256k1 $(COMMON_LOAD_PARAMS) --path $(APPPATH)
 
 include $(CURDIR)/../deps/ledger-zxlib/makefiles/Makefile.devices
 
@@ -76,21 +81,7 @@ $(error ICONNAME is not set)
 endif
 
 include $(CURDIR)/../deps/ledger-zxlib/makefiles/Makefile.platform
-CFLAGS += -Wvla
-INCLUDES_PATH += $(BOLOS_SDK)/lib_cxng/src
-
-.PHONY: rust
-rust:
-	@echo "No rust code"
-
-# Before linking, we need to be sure rust lib is there
-bin/app.elf: rust
-
-.PHONY: rust_clean
-rust_clean:
-	@echo "No rust code"
-
-clean: rust_clean
+LDFLAGS += -z muldefs
 
 include $(CURDIR)/../deps/ledger-zxlib/makefiles/Makefile.side_loading
 
@@ -100,6 +91,7 @@ include $(BOLOS_SDK)/Makefile.rules
 #add dependency on custom makefile filename
 dep/%.d: %.c Makefile
 
+.PHONY: listvariants
 listvariants:
 	@echo VARIANTS COIN PEAQ
 

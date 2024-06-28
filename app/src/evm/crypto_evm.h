@@ -24,6 +24,7 @@ extern "C" {
 #include <stdbool.h>
 
 #include "coin.h"
+#include "coin_evm.h"
 #include "zxerror.h"
 
 extern uint8_t peaq_chain_code;

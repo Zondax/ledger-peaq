@@ -37,6 +37,7 @@ extern "C" {
 #define DATA_BYTES_TO_PRINT           10
 #define KECCAK_256_SIZE               32
 
+#define SK_SECP256K1_SIZE             32
 #define SECP256K1_PK_LEN              65u
 #define SECP256K1_SK_LEN              64u
 #define PK_LEN_SECP256K1_UNCOMPRESSED 65u

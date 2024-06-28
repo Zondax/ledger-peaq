@@ -17,7 +17,7 @@
 #include "app_mode.h"
 #include "coin.h"
 #include "coin_evm.h"
-#include "crypto.h"
+#include "crypto_evm.h"
 #include "zxformat.h"
 #include "zxmacros.h"
 
@@ -54,7 +54,7 @@ zxerr_t addr_getItem(int8_t displayIdx, char *outKey, uint16_t outKeyLen, char *
 
             snprintf(outKey, outKeyLen, "Your Path");
             char buffer[300];
-            bip32_to_str(buffer, sizeof(buffer), hdPath, HDPATH_LEN_DEFAULT);
+            bip32_to_str(buffer, sizeof(buffer), hdPathEth, HDPATH_LEN_DEFAULT);
             pageString(outVal, outValLen, buffer, pageIdx, pageCount);
             return zxerr_ok;
         }

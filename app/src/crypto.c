@@ -18,27 +18,40 @@
 
 #include "base58.h"
 #include "coin.h"
-#include "coin_evm.h"
 #include "crypto_evm.h"
 #include "crypto_helper.h"
 #include "cx.h"
 #include "ristretto.h"
 #include "zxmacros.h"
 
-uint32_t hdPath[HDPATH_LEN_DEFAULT];
+typedef struct {
+    uint8_t sign_type;
+    uint8_t r[32];
+    uint8_t s[32];
+    uint8_t v;
 
-zxerr_t crypto_sign_ed25519(uint8_t *signature, uint16_t signatureMaxlen, const uint8_t *message, uint16_t messageLen) {
-    if (signature == NULL || message == NULL || signatureMaxlen < SIG_PLUS_TYPE_LEN || messageLen == 0) {
-        return zxerr_buffer_too_small;
+    // DER signature max size should be 73
+    // https://bitcoin.stackexchange.com/questions/77191/what-is-the-maximum-size-of-a-der-encoded-ecdsa-signature#77192
+    uint8_t der_signature[73];
+
+} __attribute__((packed)) signature_substrate_t;
+
+zxerr_t crypto_sign(uint8_t *output, uint16_t outputLen, const uint8_t *message, uint16_t messageLen, uint16_t *sigSize) {
+    if (output == NULL || message == NULL || sigSize == NULL || outputLen < sizeof(signature_substrate_t)) {
+        return zxerr_invalid_crypto_settings;
     }
+
+    zxerr_t error = zxerr_unknown;
     cx_ecfp_private_key_t cx_privateKey;
-    uint8_t privateKeyData[SK_LEN_25519] = {0};
+    uint8_t privateKeyData[SECP256K1_SK_LEN] = {0};
+    size_t signatureLength = sizeof_field(signature_substrate_t, der_signature);
+    uint32_t tmpInfo = 0;
+    *sigSize = 0;
 
     const uint8_t *toSign = message;
     uint8_t messageDigest[BLAKE2B_DIGEST_SIZE] = {0};
 
-    zxerr_t error = zxerr_unknown;
-
+    // Hash Message if bigger
     if (messageLen > MAX_SIGN_SIZE) {
         // Hash it
         cx_blake2b_t ctx;
@@ -48,25 +61,34 @@ zxerr_t crypto_sign_ed25519(uint8_t *signature, uint16_t signatureMaxlen, const 
         messageLen = BLAKE2B_DIGEST_SIZE;
     }
 
+    signature_substrate_t *const signature = (signature_substrate_t *)output;
     // Generate keys
-    CATCH_CXERROR(os_derive_bip32_with_seed_no_throw(HDW_NORMAL, CX_CURVE_Ed25519, hdPath, HDPATH_LEN_DEFAULT,
+    CATCH_CXERROR(os_derive_bip32_with_seed_no_throw(HDW_NORMAL, CX_CURVE_256K1, hdPathEth, HDPATH_LEN_DEFAULT,
                                                      privateKeyData, NULL, NULL, 0));
-
-    CATCH_CXERROR(cx_ecfp_init_private_key_no_throw(CX_CURVE_Ed25519, privateKeyData, SCALAR_LEN_ED25519, &cx_privateKey));
+    CATCH_CXERROR(cx_ecfp_init_private_key_no_throw(CX_CURVE_256K1, privateKeyData, SK_SECP256K1_SIZE, &cx_privateKey));
 
     // Sign
-    *signature = PREFIX_SIGNATURE_TYPE_ED25519;
-    CATCH_CXERROR(cx_eddsa_sign_no_throw(&cx_privateKey, CX_SHA512, toSign, messageLen, signature + 1, signatureMaxlen - 1));
-    error = zxerr_ok;
+    CATCH_CXERROR(cx_ecdsa_sign_no_throw(&cx_privateKey, CX_RND_RFC6979 | CX_LAST, CX_SHA256, toSign, messageLen,
+                                         signature->der_signature, &signatureLength, &tmpInfo));
+
+    signature->sign_type = PREFIX_SIGNATURE_TYPE_EDCSA;
+
+    const err_convert_e err_c =
+        convertDERtoRSV(signature->der_signature, tmpInfo, signature->r, signature->s, &signature->v);
+    if (err_c != no_error) {
+        error = zxerr_unknown;
+    } else {
+        *sigSize = sizeof_field(signature_substrate_t, sign_type) + sizeof_field(signature_substrate_t, r) +
+                   sizeof_field(signature_substrate_t, s) + sizeof_field(signature_substrate_t, v);
+        error = zxerr_ok;
+    }
 
 catch_cx_error:
     MEMZERO(&cx_privateKey, sizeof(cx_privateKey));
-    MEMZERO(privateKeyData, SK_LEN_25519);
-
+    MEMZERO(privateKeyData, sizeof(privateKeyData));
     if (error != zxerr_ok) {
-        MEMZERO(signature, signatureMaxlen);
+        MEMZERO(signature, outputLen);
     }
-
     return error;
 }
 

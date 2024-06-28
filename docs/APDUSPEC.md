@@ -161,7 +161,10 @@ All other packets/chunks contain data chunks that are described below
 
 | Field   | Type      | Content     | Note                     |
 | ------- | --------- | ----------- | ------------------------ |
-| SIG     | byte (65) | Signature   |                          |
+| SIG     | byte (1)  | sig_type    | 0x2 = secp256k1          |
+| SIG     | byte (32) | r           |                          |
+| SIG     | byte (32) | s           |                          |
+| SIG     | byte (1)  | v           |                          |
 | SW1-SW2 | byte (2)  | Return code | see list of return codes |
 
 ---

@@ -16,10 +16,8 @@
 
 import Zemu, { ButtonKind } from '@zondax/zemu'
 import { PeaqApp } from '@zondax/ledger-peaq'
-import { models, defaultOptions, PATH, EXPECTED_SUBSTRATE_ADDR, EXPECTED_SUBSTRATE_PK, ETH_PATH, EXPECTED_ETH_PK } from './common'
-
-// @ts-expect-error missing typings
-import ed25519 from 'ed25519-supercop'
+import { models, defaultOptions, EXPECTED_SUBSTRATE_ADDR, EXPECTED_SUBSTRATE_PK, ETH_PATH } from './common'
+import { ec } from 'elliptic'
 import { blake2bFinal, blake2bInit, blake2bUpdate } from 'blakejs'
 
 import {
@@ -134,17 +132,14 @@ describe.each(models)('Substrate', function (m) {
     try {
       await sim.start({ ...defaultOptions, model: m.name })
       const app = new PeaqApp(sim.getTransport())
-      const pathAccount = 0x80000000
-      const pathChange = 0x80000000
-      const pathIndex = 0x80000000
 
       const txBlob = Buffer.from(data.blob, 'hex')
 
-      const responseAddr = await app.getAddress(PATH)
+      const responseAddr = await app.getAddress(ETH_PATH, false, true)
       const pubKey = Buffer.from(responseAddr.pubKey, 'hex')
 
       // do not wait here.. we need to navigate
-      const signatureRequest = app.sign(PATH, txBlob)
+      const signatureRequest = app.sign(ETH_PATH, txBlob)
       // Wait until we are not in the main menu
       await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot())
 
@@ -163,7 +158,16 @@ describe.each(models)('Substrate', function (m) {
         blake2bUpdate(context, txBlob)
         prehash = Buffer.from(blake2bFinal(context))
       }
-      const valid = ed25519.verify(signatureResponse.signature.subarray(1), prehash, pubKey)
+
+      const EC = new ec('secp256k1')
+      const signature_obj = {
+        sign_type: signatureResponse.sign_type!,
+        r: signatureResponse.r!,
+        s: signatureResponse.s!,
+        v: signatureResponse.v!,
+      }
+
+      const valid = EC.verify(prehash, signature_obj, pubKey, 'hex')
       expect(valid).toEqual(true)
     } finally {
       await sim.close()
@@ -175,20 +179,17 @@ describe.each(models)('Substrate', function (m) {
     try {
       await sim.start({ ...defaultOptions, model: m.name })
       const app = new PeaqApp(sim.getTransport())
-      const pathAccount = 0x80000000
-      const pathChange = 0x80000000
-      const pathIndex = 0x80000000
 
       const txBlob = Buffer.from(data.blob, 'hex')
 
       //Change to expert mode so we can skip fields
       await sim.toggleExpertMode()
 
-      const responseAddr = await app.getAddress(PATH)
+      const responseAddr = await app.getAddress(ETH_PATH, false, true)
       const pubKey = Buffer.from(responseAddr.pubKey, 'hex')
 
       // do not wait here.. we need to navigate
-      const signatureRequest = app.sign(PATH, txBlob)
+      const signatureRequest = app.sign(ETH_PATH, txBlob)
       // Wait until we are not in the main menu
       await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot())
 
@@ -207,7 +208,16 @@ describe.each(models)('Substrate', function (m) {
         blake2bUpdate(context, txBlob)
         prehash = Buffer.from(blake2bFinal(context))
       }
-      const valid = ed25519.verify(signatureResponse.signature.subarray(1), prehash, pubKey)
+
+      const EC = new ec('secp256k1')
+      const signature_obj = {
+        sign_type: signatureResponse.sign_type!,
+        r: signatureResponse.r!,
+        s: signatureResponse.s!,
+        v: signatureResponse.v!,
+      }
+
+      const valid = EC.verify(prehash, signature_obj, pubKey, 'hex')
       expect(valid).toEqual(true)
     } finally {
       await sim.close()

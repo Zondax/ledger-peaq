@@ -67,8 +67,8 @@ TEST(CONVERT, EVM2SS58) {
                        0x1a, 0xbd, 0x04, 0xa9, 0x9f, 0xd6, 0x82, 0x2c, 0x85, 0x58};
     char ss58_address[60];
     const char *expected_address = "5FrLxJsyJ5x9n2rmxFwosFraxFCKcXZDngRLNectCn64UjtZ";
-
-    convertEvmToSS58(evm, 20, (uint8_t *)ss58_address, sizeof(ss58_address));
+    uint16_t ss58_len = 60;
+    convertEvmToSS58(evm, 20, (uint8_t *)ss58_address, &ss58_len);
 
     // Ensure null-terminated string
     ss58_address[sizeof(ss58_address) - 1] = '\0';

@@ -27,8 +27,6 @@ uint8_t peaq_chain_code;
 uint32_t hdPathEth[HDPATH_LEN_DEFAULT];
 uint32_t hdPathEth_len;
 
-#define KECCAK_256_SIZE 32
-
 #define CHECK_CX_OK(CALL)         \
     do {                          \
         cx_err_t __cx_err = CALL; \

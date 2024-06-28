@@ -35,6 +35,7 @@ extern "C" {
 #define SELECTOR_LENGTH               4
 #define BIGINT_LENGTH                 32
 #define DATA_BYTES_TO_PRINT           10
+#define KECCAK_256_SIZE               32
 
 #define SECP256K1_PK_LEN              65u
 #define SECP256K1_SK_LEN              64u

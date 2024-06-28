@@ -43,9 +43,10 @@ void extractHDPath(uint32_t rx, uint32_t offset) {
         THROW(APDU_CODE_WRONG_LENGTH);
     }
 
-    memcpy(hdPath, G_io_apdu_buffer + offset, sizeof(uint32_t) * HDPATH_LEN_DEFAULT);
+    memcpy(hdPathEth, G_io_apdu_buffer + offset, sizeof(uint32_t) * HDPATH_LEN_DEFAULT);
+    hdPathEth_len = HDPATH_LEN_DEFAULT;
 
-    const bool mainnet = hdPath[0] == HDPATH_0_DEFAULT && hdPath[1] == HDPATH_1_DEFAULT;
+    const bool mainnet = hdPathEth[0] == HDPATH_ETH_0_DEFAULT && hdPathEth[1] == HDPATH_ETH_1_DEFAULT;
 
     if (!mainnet) {
         THROW(APDU_CODE_DATA_INVALID);
@@ -121,7 +122,12 @@ __Z_INLINE void handle_getversion(__Z_UNUSED volatile uint32_t *flags, volatile 
 __Z_INLINE void handleGetAddr(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
     extractHDPath(rx, OFFSET_DATA);
 
-    const uint8_t requireConfirmation = G_io_apdu_buffer[OFFSET_P1];
+    uint8_t requireConfirmation = G_io_apdu_buffer[OFFSET_P1];
+    uint8_t with_code = G_io_apdu_buffer[OFFSET_P2];
+
+    if (with_code != P2_CHAINCODE && with_code != P2_NO_CHAINCODE) THROW(APDU_CODE_INVALIDP1P2);
+
+    peaq_chain_code = with_code;
 
     zxerr_t zxerr = app_fill_address();
     if (zxerr != zxerr_ok) {

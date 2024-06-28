@@ -17,6 +17,9 @@
 #include "crypto_helper.h"
 
 #include "base58.h"
+#include "coin_evm.h"
+
+#define EVM_STR_LEN 4
 
 #if defined(TARGET_NANOS) || defined(TARGET_NANOX) || defined(TARGET_NANOS2) || defined(TARGET_STAX)
 #include "cx.h"
@@ -26,6 +29,13 @@ cx_err_t ss58hash(const unsigned char *in, unsigned int inLen, unsigned char *ou
     CHECK_CXERROR(cx_hash_no_throw(&ctx.header, 0, SS58_BLAKE_PREFIX, SS58_BLAKE_PREFIX_LEN, NULL, 0));
     CHECK_CXERROR(cx_hash_no_throw(&ctx.header, CX_LAST, in, inLen, out, outLen));
 
+    return CX_OK;
+}
+
+cx_err_t encoding_hash(const unsigned char *in, unsigned int inLen, unsigned char *out, unsigned int outLen) {
+    cx_blake2b_t ctx;
+    CHECK_CXERROR(cx_blake2b_init_no_throw(&ctx, 256));
+    CHECK_CXERROR(cx_hash_no_throw(&ctx.header, CX_LAST, in, inLen, out, outLen));
     return CX_OK;
 }
 #else
@@ -43,6 +53,13 @@ int ss58hash(const unsigned char *in, unsigned int inLen, unsigned char *out, un
     return 0;
 }
 
+int encoding_hash(const unsigned char *in, unsigned int inLen, unsigned char *out, unsigned int outLen) {
+    blake2b_state s;
+    blake2b_init(&s, 32);
+    blake2b_update(&s, in, inLen);
+    blake2b_final(&s, out, outLen);
+    return 0;
+}
 #endif
 
 uint8_t crypto_SS58CalculatePrefix(uint16_t addressType, uint8_t *prefixBytes) {
@@ -93,4 +110,40 @@ uint16_t crypto_SS58EncodePubkey(uint8_t *buffer, uint16_t buffer_len, uint16_t 
     }
 
     return outLen;
+}
+
+zxerr_t convertEvmToSS58(uint8_t *evm_addr, uint16_t evm_addr_len, uint8_t *ss58_addr, uint16_t *ss58_addr_len) {
+    if (evm_addr == NULL || evm_addr_len != ETH_ADDR_LEN || ss58_addr == NULL || *ss58_addr_len < SS58_ADDRESS_MAX_LEN) {
+        return zxerr_invalid_crypto_settings;
+    }
+
+    // Append emv: prefix
+    const char *evm_str = "evm:";
+
+    uint8_t msg[EVM_STR_LEN + ETH_ADDR_LEN];
+    memcpy(msg, evm_str, EVM_STR_LEN);
+    memcpy(msg + EVM_STR_LEN, evm_addr, ETH_ADDR_LEN);
+
+    // hash previous prefixed address and concatenate with ss58 prefix
+    uint8_t prefix_message[1 + 32] = {0};
+    prefix_message[0] = 0x2A;
+    encoding_hash(msg, EVM_STR_LEN + ETH_ADDR_LEN, prefix_message + 1, 32);
+
+    // SS58 hash previous
+    uint8_t hash[64] = {0};
+    ss58hash(prefix_message, 1 + 32, hash, 64);
+
+    // Get msg to encode -> 42 | hash(evm|evm_addr) | 2 bytes of ss58hash(42 | hash(evm|evm_addr))
+    uint8_t to_encode[33 + 2];
+    memcpy(to_encode, prefix_message, 33);
+    memcpy(to_encode + 33, hash, 2);
+
+    size_t out_len = *ss58_addr_len;
+    if (encode_base58(to_encode, 35, ss58_addr, &out_len) != 0) {
+        return zxerr_encoding_failed;
+    }
+
+    *ss58_addr_len = out_len;
+
+    return zxerr_ok;
 }

@@ -35,6 +35,8 @@ uint8_t crypto_SS58CalculatePrefix(uint16_t addressType, uint8_t *prefixBytes);
 
 uint16_t crypto_SS58EncodePubkey(uint8_t *buffer, uint16_t buffer_len, uint16_t addressType, const uint8_t *pubkey);
 
+zxerr_t convertEvmToSS58(uint8_t *evm_addr, uint16_t evm_addr_len, uint8_t *ss58_addr, uint16_t *ss58_addr_len);
+
 #ifdef __cplusplus
 }
 #endif

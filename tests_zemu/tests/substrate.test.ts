@@ -16,7 +16,7 @@
 
 import Zemu, { ButtonKind } from '@zondax/zemu'
 import { PeaqApp } from '@zondax/ledger-peaq'
-import { models, defaultOptions, PATH, EXPECTED_SUBSTRATE_ADDR, EXPECTED_SUBSTRATE_PK } from './common'
+import { models, defaultOptions, PATH, EXPECTED_SUBSTRATE_ADDR, EXPECTED_SUBSTRATE_PK, ETH_PATH, EXPECTED_ETH_PK } from './common'
 
 // @ts-expect-error missing typings
 import ed25519 from 'ed25519-supercop'
@@ -81,7 +81,7 @@ describe.each(models)('Substrate', function (m) {
       await sim.start({ ...defaultOptions, model: m.name })
       const app = new PeaqApp(sim.getTransport())
 
-      const resp = await app.getAddress(PATH)
+      const resp = await app.getAddress(ETH_PATH, false, true)
 
       console.log(resp)
 
@@ -109,7 +109,7 @@ describe.each(models)('Substrate', function (m) {
       })
       const app = new PeaqApp(sim.getTransport())
 
-      const respRequest = app.getAddress(PATH, true)
+      const respRequest = app.getAddress(ETH_PATH, true, true)
       // Wait until we are not in the main menu
       await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot())
 

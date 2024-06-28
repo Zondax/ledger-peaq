@@ -59,7 +59,7 @@ ifeq ($(COIN),PEAQ)
 # Main app configuration
 DEFINES += APP_STANDARD
 APPNAME = "peaq"
-APPPATH = "44'/60'" --path "44'/354'"
+APPPATH = "44'/60'"
 else
 define error_message
 
@@ -69,7 +69,7 @@ endef
 $(error "$(error_message)")
 endif
 
-APP_LOAD_PARAMS = --curve ed25519 --curve secp256k1 $(COMMON_LOAD_PARAMS) --path $(APPPATH)
+APP_LOAD_PARAMS = --curve secp256k1 $(COMMON_LOAD_PARAMS) --path $(APPPATH)
 
 include $(CURDIR)/../deps/ledger-zxlib/makefiles/Makefile.devices
 

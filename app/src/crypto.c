@@ -21,7 +21,6 @@
 #include "crypto_evm.h"
 #include "crypto_helper.h"
 #include "cx.h"
-#include "ristretto.h"
 #include "zxmacros.h"
 
 typedef struct {

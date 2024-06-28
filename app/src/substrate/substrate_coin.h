@@ -41,15 +41,6 @@ extern "C" {
 #define MAX_SIGN_SIZE       256u
 #define BLAKE2B_DIGEST_SIZE 32u
 
-typedef enum {
-    key_ed25519 = 0,
-
-#if defined(SUPPORT_SR25519)
-    key_sr25519 = 1
-#endif
-
-} key_kind_e;
-
 // Coin Specific
 #define PK_ADDRESS_TYPE                COIN_ADDR_TYPE
 #define SUPPORTED_TX_VERSION_CURRENT   LEDGER_MAJOR_VERSION

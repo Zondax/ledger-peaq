@@ -14,7 +14,7 @@
  *  limitations under the License.
  ******************************************************************************* */
 
-import Zemu, { ButtonKind, zondaxMainmenuNavigation } from '@zondax/zemu'
+import Zemu, { ButtonKind } from '@zondax/zemu'
 import { PeaqApp } from '@zondax/ledger-peaq'
 import { ETH_PATH, EXPECTED_ETH_ADDRESS, EXPECTED_ETH_PK, defaultOptions, models } from './common'
 import { ec } from 'elliptic'

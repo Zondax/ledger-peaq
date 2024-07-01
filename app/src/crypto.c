@@ -16,43 +16,106 @@
 
 #include "crypto.h"
 
+#include "base58.h"
 #include "coin.h"
+#include "crypto_evm.h"
 #include "crypto_helper.h"
 #include "cx.h"
-#include "tx.h"
-#include "zxformat.h"
 #include "zxmacros.h"
 
-uint32_t hdPath[HDPATH_LEN_DEFAULT];
-uint32_t hdPath_len;
+typedef struct {
+    uint8_t sign_type;
+    uint8_t r[32];
+    uint8_t s[32];
+    uint8_t v;
 
-// For Future use
-zxerr_t crypto_sign(uint8_t *signature, uint16_t signatureMaxlen, const uint8_t *message, uint16_t messageLen) {
-    if (signature == NULL || message == NULL || signatureMaxlen < ED25519_SIGNATURE_SIZE || messageLen == 0) {
+    // DER signature max size should be 73
+    // https://bitcoin.stackexchange.com/questions/77191/what-is-the-maximum-size-of-a-der-encoded-ecdsa-signature#77192
+    uint8_t der_signature[73];
+
+} __attribute__((packed)) signature_substrate_t;
+
+zxerr_t crypto_sign(uint8_t *output, uint16_t outputLen, const uint8_t *message, uint16_t messageLen, uint16_t *sigSize) {
+    if (output == NULL || message == NULL || sigSize == NULL || outputLen < sizeof(signature_substrate_t)) {
         return zxerr_invalid_crypto_settings;
     }
 
-    cx_ecfp_private_key_t cx_privateKey;
-    uint8_t privateKeyData[SK_LEN_25519] = {0};
-
     zxerr_t error = zxerr_unknown;
-    // Generate keys
-    CATCH_CXERROR(os_derive_bip32_no_throw(CX_CURVE_Ed25519, hdPath, HDPATH_LEN_DEFAULT, privateKeyData, NULL));
+    cx_ecfp_private_key_t cx_privateKey;
+    uint8_t privateKeyData[SECP256K1_SK_LEN] = {0};
+    size_t signatureLength = sizeof_field(signature_substrate_t, der_signature);
+    uint32_t tmpInfo = 0;
+    *sigSize = 0;
 
-    CATCH_CXERROR(cx_ecfp_init_private_key_no_throw(CX_CURVE_Ed25519, privateKeyData, SCALAR_LEN_ED25519, &cx_privateKey));
+    const uint8_t *toSign = message;
+    uint8_t messageDigest[BLAKE2B_DIGEST_SIZE] = {0};
+
+    // Hash Message if bigger
+    if (messageLen > MAX_SIGN_SIZE) {
+        // Hash it
+        cx_blake2b_t ctx;
+        CATCH_CXERROR(cx_blake2b_init_no_throw(&ctx, 256));
+        CATCH_CXERROR(cx_hash_no_throw(&ctx.header, CX_LAST, message, messageLen, messageDigest, BLAKE2B_DIGEST_SIZE));
+        toSign = messageDigest;
+        messageLen = BLAKE2B_DIGEST_SIZE;
+    }
+
+    signature_substrate_t *const signature = (signature_substrate_t *)output;
+    // Generate keys
+    CATCH_CXERROR(os_derive_bip32_with_seed_no_throw(HDW_NORMAL, CX_CURVE_256K1, hdPathEth, HDPATH_LEN_DEFAULT,
+                                                     privateKeyData, NULL, NULL, 0));
+    CATCH_CXERROR(cx_ecfp_init_private_key_no_throw(CX_CURVE_256K1, privateKeyData, SK_SECP256K1_SIZE, &cx_privateKey));
 
     // Sign
-    CATCH_CXERROR(cx_eddsa_sign_no_throw(&cx_privateKey, CX_SHA512, message, messageLen, signature, signatureMaxlen));
+    CATCH_CXERROR(cx_ecdsa_sign_no_throw(&cx_privateKey, CX_RND_RFC6979 | CX_LAST, CX_SHA256, toSign, messageLen,
+                                         signature->der_signature, &signatureLength, &tmpInfo));
 
-    error = zxerr_ok;
+    signature->sign_type = PREFIX_SIGNATURE_TYPE_EDCSA;
+
+    const err_convert_e err_c =
+        convertDERtoRSV(signature->der_signature, tmpInfo, signature->r, signature->s, &signature->v);
+    if (err_c != no_error) {
+        error = zxerr_unknown;
+    } else {
+        *sigSize = sizeof_field(signature_substrate_t, sign_type) + sizeof_field(signature_substrate_t, r) +
+                   sizeof_field(signature_substrate_t, s) + sizeof_field(signature_substrate_t, v);
+        error = zxerr_ok;
+    }
 
 catch_cx_error:
     MEMZERO(&cx_privateKey, sizeof(cx_privateKey));
     MEMZERO(privateKeyData, sizeof(privateKeyData));
-
     if (error != zxerr_ok) {
-        MEMZERO(signature, signatureMaxlen);
+        MEMZERO(signature, outputLen);
+    }
+    return error;
+}
+
+zxerr_t crypto_fillAddress(uint8_t *buffer, uint16_t bufferLen, uint16_t *addrResponseLen) {
+    if (buffer == NULL || bufferLen < (SECP256K1_PK_LEN + SS58_ADDRESS_MAX_LEN) || addrResponseLen == NULL) {
+        return zxerr_no_data;
+    }
+    MEMZERO(buffer, bufferLen);
+
+    uint8_t pubkey[SECP256K1_PK_LEN] = {0};
+    CHECK_ZXERR(crypto_extractUncompressedPublicKey(pubkey, SECP256K1_PK_LEN, &peaq_chain_code))
+
+    memcpy(buffer, pubkey, SECP256K1_PK_LEN);
+
+    uint8_t hash[KECCAK_256_SIZE] = {0};
+    CHECK_ZXERR(keccak_digest(&pubkey[1], SECP256K1_PK_LEN - 1, hash, KECCAK_256_SIZE))
+
+    // encode last 20 bytes of the hash(the eth address) to base58
+    uint16_t ss58_len = SS58_ADDRESS_MAX_LEN;
+    zxerr_t err = convertEvmToSS58(hash + 12, ETH_ADDR_LEN, buffer + SECP256K1_PK_LEN, &ss58_len);
+
+    if (err != zxerr_ok) {
+        MEMZERO(buffer, bufferLen);
+        MEMZERO(hash, KECCAK_256_SIZE);
+        MEMZERO(pubkey, SECP256K1_PK_LEN);
+        return zxerr_unknown;
     }
 
-    return error;
+    *addrResponseLen = SECP256K1_PK_LEN + ss58_len;
+    return zxerr_ok;
 }

@@ -23,6 +23,7 @@
 #include <iostream>
 #include <vector>
 
+#include "crypto_helper.h"
 #include "gmock/gmock.h"
 #include "parser.h"
 #include "parser_txdef.h"
@@ -59,4 +60,19 @@ TEST(SCALE, ReadBytes) {
     // for (uint8_t i = 0; i < 10; i++) {
     //     EXPECT_EQ(testArray2[i], bytesArray[i+4]);
     // }
+}
+
+TEST(CONVERT, EVM2SS58) {
+    uint8_t evm[20] = {0xd4, 0x35, 0x93, 0xc7, 0x15, 0xfd, 0xd3, 0x1c, 0x61, 0x14,
+                       0x1a, 0xbd, 0x04, 0xa9, 0x9f, 0xd6, 0x82, 0x2c, 0x85, 0x58};
+    char ss58_address[60];
+    const char *expected_address = "5FrLxJsyJ5x9n2rmxFwosFraxFCKcXZDngRLNectCn64UjtZ";
+    uint16_t ss58_len = 60;
+    convertEvmToSS58(evm, 20, (uint8_t *)ss58_address, &ss58_len);
+
+    // Ensure null-terminated string
+    ss58_address[sizeof(ss58_address) - 1] = '\0';
+
+    // Check if the result matches the expected address
+    ASSERT_STREQ(ss58_address, expected_address);
 }

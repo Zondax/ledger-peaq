@@ -19,15 +19,19 @@
 #include <stdio.h>
 #include <zxmacros.h>
 
-#include "parser_common.h"
 #include "rlp.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#define TMP_DATA_ARRAY_SIZE   40
-#define ERC20_TRANSFER_OFFSET 4 + 12
+#define CHECK_ERROR_EVM(__CALL)               \
+    {                                         \
+        parser_error_t __err = __CALL;        \
+        CHECK_APP_CANARY()                    \
+        if (__err != parser_ok) return __err; \
+    }
+
 typedef enum RlpError {
     rlp_ok = 0,
     rlp_no_data,
@@ -58,9 +62,6 @@ parser_error_t be_bytes_to_u64(const uint8_t *bytes, uint8_t len, uint64_t *num)
 parser_error_t printRLPNumber(const rlp_t *num, char *outVal, uint16_t outValLen, uint8_t pageIdx, uint8_t *pageCount);
 
 parser_error_t printEVMAddress(const rlp_t *address, char *outVal, uint16_t outValLen, uint8_t pageIdx, uint8_t *pageCount);
-
-parser_error_t printBigIntFixedPoint(const uint8_t *number, uint16_t number_len, char *outVal, uint16_t outValLen,
-                                     uint8_t pageIdx, uint8_t *pageCount, uint16_t decimals);
 #ifdef __cplusplus
 }
 #endif

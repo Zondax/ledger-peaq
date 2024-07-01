@@ -16,9 +16,9 @@
 
 #include "evm_erc20.h"
 
+#include "evm_utils.h"
 #include "zxformat.h"
 
-#define EVM_SELECTOR_LENGTH 4
 // Prefix is calculated as: keccak256("transfer(address,uint256)") = 0xa9059cbb
 const uint8_t ERC20_TRANSFER_PREFIX[] = {0xa9, 0x05, 0x9c, 0xbb};
 
@@ -32,7 +32,7 @@ const erc20_tokens_t supportedTokens[] = {{{0xa8, 0x10, 0xac, 0xb7, 0xcc, 0xdc, 
 
 parser_error_t getERC20Token(const eth_tx_t *ethObj, char tokenSymbol[MAX_SYMBOL_LEN], uint8_t *decimals) {
     if (ethObj == NULL || tokenSymbol == NULL || decimals == NULL || ethObj->tx.data.rlpLen != ERC20_DATA_LENGTH ||
-        memcmp(ethObj->tx.data.ptr, ERC20_TRANSFER_PREFIX, EVM_SELECTOR_LENGTH) != 0) {
+        memcmp(ethObj->tx.data.ptr, ERC20_TRANSFER_PREFIX, 4) != 0) {
         return parser_unexpected_value;
     }
 
@@ -61,12 +61,12 @@ parser_error_t printERC20Value(const eth_tx_t *ethObj, char *outVal, uint16_t ou
     // [identifier (4) | token contract (12 + 20) | value (32)]
     char tokenSymbol[10] = {0};
     uint8_t decimals = 0;
-    CHECK_ERROR(getERC20Token(ethObj, tokenSymbol, &decimals))
+    CHECK_ERROR_EVM(getERC20Token(ethObj, tokenSymbol, &decimals))
 
     uint256_t value = {0};
     const uint8_t *valuePtr = ethObj->tx.data.ptr + SELECTOR_LENGTH + BIGINT_LENGTH;
     parser_context_t tmpCtx = {.buffer = valuePtr, .bufferLen = BIGINT_LENGTH, .offset = 0};
-    CHECK_ERROR(readu256BE(&tmpCtx, &value));
+    CHECK_ERROR_EVM(readu256BE(&tmpCtx, &value));
 
     char bufferUI[100] = {0};
     if (!tostring256(&value, DECIMAL_BASE, bufferUI, sizeof(bufferUI))) {
@@ -93,7 +93,7 @@ bool validateERC20(eth_tx_t *ethObj) {
         return false;
     }
     // Check that data start with ERC20 prefix
-    if (ethObj->tx.to.rlpLen != ETH_ADDRESS_LEN || ethObj->tx.data.ptr == NULL ||
+    if (ethObj == NULL || ethObj->tx.to.rlpLen != ETH_ADDRESS_LEN || ethObj->tx.data.ptr == NULL ||
         ethObj->tx.data.rlpLen != ERC20_DATA_LENGTH ||
         memcmp(ethObj->tx.data.ptr, ERC20_TRANSFER_PREFIX, sizeof(ERC20_TRANSFER_PREFIX)) != 0) {
         ethObj->is_erc20_transfer = false;

@@ -24,14 +24,19 @@ extern "C" {
 #include <stdbool.h>
 
 #include "coin.h"
+#include "coin_evm.h"
 #include "zxerror.h"
 
+extern uint8_t peaq_chain_code;
 extern uint32_t hdPathEth[HDPATH_LEN_DEFAULT];
 extern uint32_t hdPathEth_len;
 
 zxerr_t crypto_fillEthAddress(uint8_t *buffer, uint16_t buffer_len, uint16_t *addrLen);
 zxerr_t crypto_sign_eth(uint8_t *buffer, uint16_t signatureMaxlen, const uint8_t *message, uint16_t messageLen,
                         uint16_t *sigSize);
+
+zxerr_t keccak_digest(const unsigned char *in, unsigned int inLen, unsigned char *out, unsigned int outLen);
+zxerr_t crypto_extractUncompressedPublicKey(uint8_t *pubKey, uint16_t pubKeyLen, uint8_t *chainCode);
 #ifdef __cplusplus
 }
 #endif

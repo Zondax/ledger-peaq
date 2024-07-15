@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@zondax/ledger-peaq": "../js",
+    "@zondax/ledger-substrate": "0.44.7",
     "@zondax/zemu": "^0.49.0"
   },
   "devDependencies": {

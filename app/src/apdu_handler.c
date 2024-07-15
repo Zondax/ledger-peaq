@@ -123,11 +123,6 @@ __Z_INLINE void handleGetAddr(volatile uint32_t *flags, volatile uint32_t *tx, u
     extractHDPath(rx, OFFSET_DATA);
 
     uint8_t requireConfirmation = G_io_apdu_buffer[OFFSET_P1];
-    uint8_t with_code = G_io_apdu_buffer[OFFSET_P2];
-
-    if (with_code != P2_CHAINCODE && with_code != P2_NO_CHAINCODE) THROW(APDU_CODE_INVALIDP1P2);
-
-    peaq_chain_code = with_code;
 
     zxerr_t zxerr = app_fill_address();
     if (zxerr != zxerr_ok) {

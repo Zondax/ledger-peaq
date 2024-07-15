@@ -41,6 +41,7 @@ extern "C" {
 #define SECP256K1_PK_LEN              65u
 #define SECP256K1_SK_LEN              64u
 #define PK_LEN_SECP256K1_UNCOMPRESSED 65u
+#define PK_LEN_SECP256K1              33u
 
 #define INS_SIGN_ETH                  0x04
 #define INS_GET_ADDR_ETH              0x02

@@ -123,6 +123,12 @@ __Z_INLINE void handleGetAddr(volatile uint32_t *flags, volatile uint32_t *tx, u
     extractHDPath(rx, OFFSET_DATA);
 
     uint8_t requireConfirmation = G_io_apdu_buffer[OFFSET_P1];
+    uint8_t schemeConfirmation = G_io_apdu_buffer[OFFSET_P2];
+
+    // Add scheme verification to avoid returning an address and pubkey that will be processed in the wring way
+    if (schemeConfirmation != ADDRESS_TYPE_EDCSA) {
+        THROW(APDU_CODE_INVALIDP1P2);
+    }
 
     zxerr_t zxerr = app_fill_address();
     if (zxerr != zxerr_ok) {
@@ -141,6 +147,12 @@ __Z_INLINE void handleGetAddr(volatile uint32_t *flags, volatile uint32_t *tx, u
 
 __Z_INLINE void handleSign(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
     zemu_log("handleSign\n");
+
+    uint8_t schemeConfirmation = G_io_apdu_buffer[OFFSET_P2];
+    if (schemeConfirmation != ADDRESS_TYPE_EDCSA) {
+        THROW(APDU_CODE_INVALIDP1P2);
+    }
+
     if (!process_chunk(tx, rx)) {
         THROW(APDU_CODE_OK);
     }

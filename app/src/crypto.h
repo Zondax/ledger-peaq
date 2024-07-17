@@ -28,6 +28,8 @@ extern "C" {
 #include "zxerror.h"
 
 #define PREFIX_SIGNATURE_TYPE_EDCSA 2
+#define SIGNATURE_TYPE_EDCSA        PREFIX_SIGNATURE_TYPE_EDCSA
+#define ADDRESS_TYPE_EDCSA          PREFIX_SIGNATURE_TYPE_EDCSA
 #define MIN_BUFFER_LENGTH           235
 #define START_BUFFER                33
 

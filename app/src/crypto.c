@@ -91,31 +91,40 @@ catch_cx_error:
     return error;
 }
 
+__Z_INLINE zxerr_t compressPubkey(const uint8_t *pubkey, uint16_t pubkeyLen, uint8_t *output, uint16_t outputLen) {
+    if (pubkey == NULL || output == NULL || pubkeyLen != PK_LEN_SECP256K1_UNCOMPRESSED || outputLen < PK_LEN_SECP256K1) {
+        return zxerr_invalid_crypto_settings;
+    }
+
+    MEMCPY(output, pubkey, PK_LEN_SECP256K1);
+    output[0] = pubkey[64] & 1 ? 0x03 : 0x02;  // "Compress" public key in place
+    return zxerr_ok;
+}
+
 zxerr_t crypto_fillAddress(uint8_t *buffer, uint16_t bufferLen, uint16_t *addrResponseLen) {
     if (buffer == NULL || bufferLen < (SECP256K1_PK_LEN + SS58_ADDRESS_MAX_LEN) || addrResponseLen == NULL) {
         return zxerr_no_data;
     }
     MEMZERO(buffer, bufferLen);
 
-    uint8_t pubkey[SECP256K1_PK_LEN] = {0};
-    CHECK_ZXERR(crypto_extractUncompressedPublicKey(pubkey, SECP256K1_PK_LEN, &peaq_chain_code))
+    uint8_t uncompressedPubkey[SECP256K1_PK_LEN] = {0};
+    CHECK_ZXERR(crypto_extractUncompressedPublicKey(uncompressedPubkey, SECP256K1_PK_LEN, NULL))
 
-    memcpy(buffer, pubkey, SECP256K1_PK_LEN);
-
+    CHECK_ZXERR(compressPubkey(uncompressedPubkey, sizeof(uncompressedPubkey), buffer, bufferLen));
     uint8_t hash[KECCAK_256_SIZE] = {0};
-    CHECK_ZXERR(keccak_digest(&pubkey[1], SECP256K1_PK_LEN - 1, hash, KECCAK_256_SIZE))
+    CHECK_ZXERR(keccak_digest(&uncompressedPubkey[1], SECP256K1_PK_LEN - 1, hash, KECCAK_256_SIZE))
 
     // encode last 20 bytes of the hash(the eth address) to base58
-    uint16_t ss58_len = SS58_ADDRESS_MAX_LEN;
-    zxerr_t err = convertEvmToSS58(hash + 12, ETH_ADDR_LEN, buffer + SECP256K1_PK_LEN, &ss58_len);
+    uint16_t replyLen = SS58_ADDRESS_MAX_LEN;
+    zxerr_t err = convertEvmToSS58(hash + 12, ETH_ADDR_LEN, buffer + PK_LEN_SECP256K1, &replyLen);
 
     if (err != zxerr_ok) {
         MEMZERO(buffer, bufferLen);
         MEMZERO(hash, KECCAK_256_SIZE);
-        MEMZERO(pubkey, SECP256K1_PK_LEN);
+        MEMZERO(uncompressedPubkey, SECP256K1_PK_LEN);
         return zxerr_unknown;
     }
 
-    *addrResponseLen = SECP256K1_PK_LEN + ss58_len;
+    *addrResponseLen = replyLen + PK_LEN_SECP256K1;
     return zxerr_ok;
 }

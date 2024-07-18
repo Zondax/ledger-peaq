@@ -15,7 +15,7 @@
  ******************************************************************************* */
 
 import Zemu, { ButtonKind } from '@zondax/zemu'
-import { PeaqApp } from '@zondax/ledger-peaq'
+import { newSubstrateApp } from '@zondax/ledger-substrate'
 import { models, defaultOptions, EXPECTED_SUBSTRATE_ADDR, EXPECTED_SUBSTRATE_PK, ETH_PATH } from './common'
 import { ec } from 'elliptic'
 import { blake2bFinal, blake2bInit, blake2bUpdate } from 'blakejs'
@@ -77,10 +77,8 @@ describe.each(models)('Substrate', function (m) {
     const sim = new Zemu(m.path)
     try {
       await sim.start({ ...defaultOptions, model: m.name })
-      const app = new PeaqApp(sim.getTransport())
-
-      const resp = await app.getAddress(ETH_PATH, false, true)
-
+      const app = newSubstrateApp(sim.getTransport(), 'Peaq')
+      const resp = await app.getAddress(0x80000000, 0x00000000, 0x00000000, false, 2)
       console.log(resp)
 
       expect(resp.return_code).toEqual(0x9000)
@@ -105,9 +103,8 @@ describe.each(models)('Substrate', function (m) {
         approveKeyword: m.name === 'stax' ? 'QR' : '',
         approveAction: ButtonKind.ApproveTapButton,
       })
-      const app = new PeaqApp(sim.getTransport())
-
-      const respRequest = app.getAddress(ETH_PATH, true, true)
+      const app = newSubstrateApp(sim.getTransport(), 'Peaq')
+      const respRequest = app.getAddress(0x80000000, 0x00000000, 0x00000000, true, 2)
       // Wait until we are not in the main menu
       await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot())
 
@@ -131,15 +128,14 @@ describe.each(models)('Substrate', function (m) {
     const sim = new Zemu(m.path)
     try {
       await sim.start({ ...defaultOptions, model: m.name })
-      const app = new PeaqApp(sim.getTransport())
+      const app = newSubstrateApp(sim.getTransport(), 'Peaq')
 
       const txBlob = Buffer.from(data.blob, 'hex')
-
-      const responseAddr = await app.getAddress(ETH_PATH, false, true)
+      const responseAddr = await app.getAddress(0x80000000, 0x00000000, 0x00000000, false, 2)
       const pubKey = Buffer.from(responseAddr.pubKey, 'hex')
 
       // do not wait here.. we need to navigate
-      const signatureRequest = app.sign(ETH_PATH, txBlob)
+      const signatureRequest = app.sign(0x80000000, 0x00000000, 0x00000000, txBlob, 2)
       // Wait until we are not in the main menu
       await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot())
 
@@ -161,10 +157,10 @@ describe.each(models)('Substrate', function (m) {
 
       const EC = new ec('secp256k1')
       const signature_obj = {
-        sign_type: signatureResponse.sign_type!,
-        r: signatureResponse.r!,
-        s: signatureResponse.s!,
-        v: signatureResponse.v!,
+        sign_type: signatureResponse.signature[0],
+        r: signatureResponse.signature.slice(1, 33),
+        s: signatureResponse.signature.slice(33, 65),
+        v: signatureResponse.signature[65],
       }
 
       const valid = EC.verify(prehash, signature_obj, pubKey, 'hex')
@@ -178,18 +174,14 @@ describe.each(models)('Substrate', function (m) {
     const sim = new Zemu(m.path)
     try {
       await sim.start({ ...defaultOptions, model: m.name })
-      const app = new PeaqApp(sim.getTransport())
-
+      const app = newSubstrateApp(sim.getTransport(), 'Peaq')
       const txBlob = Buffer.from(data.blob, 'hex')
-
-      //Change to expert mode so we can skip fields
-      await sim.toggleExpertMode()
-
-      const responseAddr = await app.getAddress(ETH_PATH, false, true)
+      const responseAddr = await app.getAddress(0x80000000, 0x00000000, 0x00000000, false, 2)
       const pubKey = Buffer.from(responseAddr.pubKey, 'hex')
 
+      await sim.toggleExpertMode()
       // do not wait here.. we need to navigate
-      const signatureRequest = app.sign(ETH_PATH, txBlob)
+      const signatureRequest = app.sign(0x80000000, 0x00000000, 0x00000000, txBlob, 2)
       // Wait until we are not in the main menu
       await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot())
 
@@ -211,10 +203,10 @@ describe.each(models)('Substrate', function (m) {
 
       const EC = new ec('secp256k1')
       const signature_obj = {
-        sign_type: signatureResponse.sign_type!,
-        r: signatureResponse.r!,
-        s: signatureResponse.s!,
-        v: signatureResponse.v!,
+        sign_type: signatureResponse.signature[0],
+        r: signatureResponse.signature.slice(1, 33),
+        s: signatureResponse.signature.slice(33, 65),
+        v: signatureResponse.signature[65],
       }
 
       const valid = EC.verify(prehash, signature_obj, pubKey, 'hex')

@@ -181,9 +181,9 @@ describe.each(models)('ETHT', function (m) {
       // Put the app in expert mode
       await sim.toggleExpertMode()
 
-      // eth pubkey used for ETH_PATH: "m/44'/60'/0'/0'/5"
+      // eth pubkey used for ETH_PATH: "m/44'/60'/0'/0/5"
       // to verify signature
-      const EXPECTED_PUBLIC_KEY = '024f1dd50f180bfd546339e75410b127331469837fa618d950f7cfb8be351b0020'
+      const EXPECTED_PUBLIC_KEY = '021853d93524119eeb31ab0b06f1dcb068f84943bb230dfa10b1292f47af643575'
 
       // do not wait here..
       const signatureRequest = app.signEVMTransaction(ETH_PATH, msg, null)

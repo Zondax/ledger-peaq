@@ -16,7 +16,7 @@ export const models: IDeviceModel[] = [
   { name: 'stax', prefix: 'ST', path: APP_PATH_ST },
 ]
 
-export const ETH_PATH = "m/44'/60'/0'/0'/5"
+export const ETH_PATH = "m/44'/60'/0'/0/0"
 
 export const defaultOptions = {
   ...DEFAULT_START_OPTIONS,
@@ -25,9 +25,8 @@ export const defaultOptions = {
   X11: false,
 }
 export const EXPECTED_ETH_PK =
-  '044f1dd50f180bfd546339e75410b127331469837fa618d950f7cfb8be351b002035e2b0343bcf8bba5874b9c6c9311de5911d471e896b1f17f10137842a2265b0'
-export const EXPECTED_ETH_ADDRESS = '0xcadff9350e9548bc68cb1e44d744bd9a801d5a5b'
+  '041853d93524119eeb31ab0b06f1dcb068f84943bb230dfa10b1292f47af6435757e8c55a1637d935c4930062ce3ef860941484ce67525ca1adf099badc83d2442'
+export const EXPECTED_ETH_ADDRESS = '0x95e5e3c1bdd92cd4a0c14c62480db5867946281d'
 
-export const EXPECTED_SUBSTRATE_ADDR = '5H2Q9p2DeHKab52nQZdTYjRVtoJme47rmiynkPF5z8qJgUqV'
-export const EXPECTED_SUBSTRATE_PK =
-  '044f1dd50f180bfd546339e75410b127331469837fa618d950f7cfb8be351b002035e2b0343bcf8bba5874b9c6c9311de5911d471e896b1f17f10137842a2265b0'
+export const EXPECTED_SUBSTRATE_ADDR = '5DtxSQCujadnQKSZFGEtVvSed2BCsNEU3NQf5Bz5WE2eV1fs'
+export const EXPECTED_SUBSTRATE_PK = '021853d93524119eeb31ab0b06f1dcb068f84943bb230dfa10b1292f47af643575'

@@ -73,26 +73,26 @@ describe.each(models)('Substrate', function (m) {
     }
   })
 
-  // test.concurrent('get address', async function () {
-  //   const sim = new Zemu(m.path)
-  //   try {
-  //     await sim.start({ ...defaultOptions, model: m.name })
-  //     const app = newSubstrateApp(sim.getTransport(), 'Peaq')
-  //     const resp = await app.getAddress(0x80000000, 0x00000000, 0x00000000, false, 2)
-  //     console.log(resp)
+  test.concurrent('get address', async function () {
+    const sim = new Zemu(m.path)
+    try {
+      await sim.start({ ...defaultOptions, model: m.name })
+      const app = newSubstrateApp(sim.getTransport(), 'Peaq')
+      const resp = await app.getAddress(0x80000000, 0x00000000, 0x00000000, false, 2)
+      console.log(resp)
 
-  //     expect(resp.return_code).toEqual(0x9000)
-  //     expect(resp.error_message).toEqual('No errors')
+      expect(resp.return_code).toEqual(0x9000)
+      expect(resp.error_message).toEqual('No errors')
 
-  //     console.log(resp.address)
-  //     console.log(resp.pubKey)
+      console.log(resp.address)
+      console.log(resp.pubKey)
 
-  //     expect(resp.address).toEqual(EXPECTED_SUBSTRATE_ADDR)
-  //     expect(resp.pubKey).toEqual(EXPECTED_SUBSTRATE_PK)
-  //   } finally {
-  //     await sim.close()
-  //   }
-  // })
+      expect(resp.address).toEqual(EXPECTED_SUBSTRATE_ADDR)
+      expect(resp.pubKey).toEqual(EXPECTED_SUBSTRATE_PK)
+    } finally {
+      await sim.close()
+    }
+  })
 
   test.concurrent('show address', async function () {
     const sim = new Zemu(m.path)
@@ -124,94 +124,95 @@ describe.each(models)('Substrate', function (m) {
     }
   })
 
-  // test.concurrent.each(TXNS)('sign transaction:  $name', async function (data) {
-  //   const sim = new Zemu(m.path)
-  //   try {
-  //     await sim.start({ ...defaultOptions, model: m.name })
-  //     const app = newSubstrateApp(sim.getTransport(), 'Peaq')
-  //     const txBlob = Buffer.from(data.blob, 'hex')
-  //     const responseAddr = await app.getAddress(0x80000000, 0x00000000, 0x00000000, false, 2)
-  //     const pubKey = Buffer.from(responseAddr.pubKey, 'hex')
+  test.concurrent.each(TXNS)('sign transaction:  $name', async function (data) {
+    const sim = new Zemu(m.path)
+    try {
+      await sim.start({ ...defaultOptions, model: m.name })
+      const app = newSubstrateApp(sim.getTransport(), 'Peaq')
 
-  //     // do not wait here.. we need to navigate
-  //     const signatureRequest = app.sign(0x80000000, 0x00000000, 0x00000000, txBlob)
-  //     // Wait until we are not in the main menu
-  //     await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot())
+      const txBlob = Buffer.from(data.blob, 'hex')
+      const responseAddr = await app.getAddress(0x80000000, 0x00000000, 0x00000000, false, 2)
+      const pubKey = Buffer.from(responseAddr.pubKey, 'hex')
 
-  //     await sim.compareSnapshotsAndApprove('.', `${m.prefix.toLowerCase()}-${data.name}`)
+      // do not wait here.. we need to navigate
+      const signatureRequest = app.sign(0x80000000, 0x00000000, 0x00000000, txBlob, 2)
+      // Wait until we are not in the main menu
+      await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot())
 
-  //     const signatureResponse = await signatureRequest
-  //     console.log(signatureResponse)
+      await sim.compareSnapshotsAndApprove('.', `${m.prefix.toLowerCase()}-${data.name}`)
 
-  //     expect(signatureResponse.return_code).toEqual(0x9000)
-  //     expect(signatureResponse.error_message).toEqual('No errors')
+      const signatureResponse = await signatureRequest
+      console.log(signatureResponse)
 
-  //     // Now verify the signature
-  //     let prehash = txBlob
-  //     if (txBlob.length > 256) {
-  //       const context = blake2bInit(32)
-  //       blake2bUpdate(context, txBlob)
-  //       prehash = Buffer.from(blake2bFinal(context))
-  //     }
+      expect(signatureResponse.return_code).toEqual(0x9000)
+      expect(signatureResponse.error_message).toEqual('No errors')
 
-  //     const EC = new ec('secp256k1')
-  //     const signature_obj = {
-  //       sign_type: signatureResponse.signature[0],
-  //       r: signatureResponse.signature.slice(1, 33),
-  //       s: signatureResponse.signature.slice(33, 65),
-  //       v: signatureResponse.signature[65],
-  //     }
+      // Now verify the signature
+      let prehash = txBlob
+      if (txBlob.length > 256) {
+        const context = blake2bInit(32)
+        blake2bUpdate(context, txBlob)
+        prehash = Buffer.from(blake2bFinal(context))
+      }
 
-  //     const valid = EC.verify(prehash, signature_obj, pubKey, 'hex')
-  //     expect(valid).toEqual(true)
-  //   } finally {
-  //     await sim.close()
-  //   }
-  // })
+      const EC = new ec('secp256k1')
+      const signature_obj = {
+        sign_type: signatureResponse.signature[0],
+        r: signatureResponse.signature.slice(1, 33),
+        s: signatureResponse.signature.slice(33, 65),
+        v: signatureResponse.signature[65],
+      }
 
-  // test.concurrent.each(TXNS)('sign transaction expert:  $name', async function (data) {
-  //   const sim = new Zemu(m.path)
-  //   try {
-  //     await sim.start({ ...defaultOptions, model: m.name })
-  //     const app = newSubstrateApp(sim.getTransport(), 'Peaq')
-  //     const txBlob = Buffer.from(data.blob, 'hex')
-  //     const responseAddr = await app.getAddress(0x80000000, 0x00000000, 0x00000000, false, 2)
-  //     const pubKey = Buffer.from(responseAddr.pubKey, 'hex')
+      const valid = EC.verify(prehash, signature_obj, pubKey, 'hex')
+      expect(valid).toEqual(true)
+    } finally {
+      await sim.close()
+    }
+  })
 
-  //     await sim.toggleExpertMode()
-  //     // do not wait here.. we need to navigate
-  //     const signatureRequest = app.sign(0x80000000, 0x00000000, 0x00000000, txBlob)
-  //     // Wait until we are not in the main menu
-  //     await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot())
+  test.concurrent.each(TXNS)('sign transaction expert:  $name', async function (data) {
+    const sim = new Zemu(m.path)
+    try {
+      await sim.start({ ...defaultOptions, model: m.name })
+      const app = newSubstrateApp(sim.getTransport(), 'Peaq')
+      const txBlob = Buffer.from(data.blob, 'hex')
+      const responseAddr = await app.getAddress(0x80000000, 0x00000000, 0x00000000, false, 2)
+      const pubKey = Buffer.from(responseAddr.pubKey, 'hex')
 
-  //     await sim.compareSnapshotsAndApprove('.', `${m.prefix.toLowerCase()}-${data.name}-expert`)
+      await sim.toggleExpertMode()
+      // do not wait here.. we need to navigate
+      const signatureRequest = app.sign(0x80000000, 0x00000000, 0x00000000, txBlob, 2)
+      // Wait until we are not in the main menu
+      await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot())
 
-  //     const signatureResponse = await signatureRequest
-  //     console.log(signatureResponse)
+      await sim.compareSnapshotsAndApprove('.', `${m.prefix.toLowerCase()}-${data.name}-expert`)
 
-  //     expect(signatureResponse.return_code).toEqual(0x9000)
-  //     expect(signatureResponse.error_message).toEqual('No errors')
+      const signatureResponse = await signatureRequest
+      console.log(signatureResponse)
 
-  //     // Now verify the signature
-  //     let prehash = txBlob
-  //     if (txBlob.length > 256) {
-  //       const context = blake2bInit(32)
-  //       blake2bUpdate(context, txBlob)
-  //       prehash = Buffer.from(blake2bFinal(context))
-  //     }
+      expect(signatureResponse.return_code).toEqual(0x9000)
+      expect(signatureResponse.error_message).toEqual('No errors')
 
-  //     const EC = new ec('secp256k1')
-  //     const signature_obj = {
-  //       sign_type: signatureResponse.signature[0],
-  //       r: signatureResponse.signature.slice(1, 33),
-  //       s: signatureResponse.signature.slice(33, 65),
-  //       v: signatureResponse.signature[65],
-  //     }
+      // Now verify the signature
+      let prehash = txBlob
+      if (txBlob.length > 256) {
+        const context = blake2bInit(32)
+        blake2bUpdate(context, txBlob)
+        prehash = Buffer.from(blake2bFinal(context))
+      }
 
-  //     const valid = EC.verify(prehash, signature_obj, pubKey, 'hex')
-  //     expect(valid).toEqual(true)
-  //   } finally {
-  //     await sim.close()
-  //   }
-  // })
+      const EC = new ec('secp256k1')
+      const signature_obj = {
+        sign_type: signatureResponse.signature[0],
+        r: signatureResponse.signature.slice(1, 33),
+        s: signatureResponse.signature.slice(33, 65),
+        v: signatureResponse.signature[65],
+      }
+
+      const valid = EC.verify(prehash, signature_obj, pubKey, 'hex')
+      expect(valid).toEqual(true)
+    } finally {
+      await sim.close()
+    }
+  })
 })

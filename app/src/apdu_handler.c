@@ -125,7 +125,7 @@ __Z_INLINE void handleGetAddr(volatile uint32_t *flags, volatile uint32_t *tx, u
     uint8_t requireConfirmation = G_io_apdu_buffer[OFFSET_P1];
     uint8_t schemeConfirmation = G_io_apdu_buffer[OFFSET_P2];
 
-    // Add scheme verification to avoid returning an address and pubkey that will be processed in the wring way
+    // Add scheme verification to avoid returning an address and pubkey that will be processed in the wrong way
     if (schemeConfirmation != ADDRESS_TYPE_EDCSA) {
         THROW(APDU_CODE_INVALIDP1P2);
     }

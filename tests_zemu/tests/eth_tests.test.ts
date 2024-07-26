@@ -14,7 +14,7 @@
  *  limitations under the License.
  ******************************************************************************* */
 
-import Zemu, { ButtonKind, zondaxMainmenuNavigation } from '@zondax/zemu'
+import Zemu, { ButtonKind, isTouchDevice } from '@zondax/zemu'
 import { PeaqApp } from '@zondax/ledger-peaq'
 import { ETH_PATH, EXPECTED_ETH_ADDRESS, EXPECTED_ETH_PK, defaultOptions, models } from './common'
 import { ec } from 'elliptic'
@@ -154,7 +154,7 @@ describe.each(models)('ETHT', function (m) {
       await sim.start({
         ...defaultOptions,
         model: m.name,
-        approveKeyword: m.name === 'stax' ? 'QR' : '',
+        approveKeyword: isTouchDevice(m.name) ? 'Confirm' : '',
         approveAction: ButtonKind.ApproveTapButton,
       })
       const app = new PeaqApp(sim.getTransport())

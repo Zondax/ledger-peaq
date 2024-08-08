@@ -445,7 +445,7 @@ parser_error_t _getNumItemsEth(uint8_t *numItems) {
         return parser_ok;
     }
 
-    *numItems = 5 + ((eth_tx_obj.tx.data.rlpLen != 0) ? 1 : 0) + ((eth_tx_obj.tx.to.rlpLen != 0) ? 1 : 0);
+    *numItems = 6 + ((eth_tx_obj.tx.data.rlpLen != 0) ? 1 : 0) + ((eth_tx_obj.tx.to.rlpLen != 0) ? 1 : 0);
     return parser_ok;
 }
 

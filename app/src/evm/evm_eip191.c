@@ -75,8 +75,8 @@ zxerr_t eip191_msg_getItem(int8_t displayIdx, char *outKey, uint16_t outKeyLen, 
     snprintf(outVal, outValLen, " ");
     *pageCount = 1;
 
-    const uint8_t *message = tx_get_buffer() + sizeof(uint32_t);
-    const uint16_t messageLength = tx_get_buffer_length() - sizeof(uint32_t);
+    const uint8_t *message = tx_get_buffer();
+    const uint16_t messageLength = tx_get_buffer_length();
 
     switch (displayIdx) {
         case 0: {
@@ -119,7 +119,7 @@ bool eip191_msg_parse() {
     return true;
 }
 
-zxerr_t eip191_hash_message(const uint8_t *message, uint16_t messageLen, uint8_t *hash) {
+zxerr_t eip191_hash_message(const uint8_t *message, uint32_t messageLen, uint8_t *hash) {
     if (message == NULL || messageLen == 0) {
         return zxerr_unknown;
     }
@@ -130,13 +130,12 @@ zxerr_t eip191_hash_message(const uint8_t *message, uint16_t messageLen, uint8_t
     CHECK_CX_OK(cx_keccak_init_no_throw(&sha3, 256));
     CHECK_CX_OK(cx_hash_no_throw((cx_hash_t *)&sha3, 0, (uint8_t *)SIGN_MAGIC, sizeof(SIGN_MAGIC) - 1, NULL, 0));
 
-    uint32_t msg_len = U4BE(message, 0);
     char len_str[12] = {0};
-    uint32_to_str(msg_len, len_str);
+    uint32_to_str(messageLen, len_str);
     CHECK_CX_OK(cx_hash_no_throw((cx_hash_t *)&sha3, 0, (uint8_t *)len_str, strlen(len_str), NULL, 0));
 
     CHECK_CX_OK(
-        cx_hash_no_throw((cx_hash_t *)&sha3, CX_LAST, message + sizeof(uint32_t), messageLen - sizeof(uint32_t), hash, 32));
+        cx_hash_no_throw((cx_hash_t *)&sha3, CX_LAST, message, messageLen, hash, 32));
 
 #endif
 

@@ -90,7 +90,7 @@ bool process_chunk_eip191(__Z_UNUSED volatile uint32_t *tx, uint32_t rx) {
 
             // plus the first offset data containing the path len
             data += path_len + 1;
-            if (len < path_len) {
+            if (len < path_len + 1) {
                 THROW(APDU_CODE_WRONG_LENGTH);
             }
             len -= path_len + 1;
@@ -98,8 +98,9 @@ bool process_chunk_eip191(__Z_UNUSED volatile uint32_t *tx, uint32_t rx) {
             // now process the chunk
             bytes_to_read = U4BE(data, 0);
             bytes_to_read -= len - sizeof(uint32_t);
-            added = tx_append(data, len);
-            if (added != len) {
+            added = tx_append(data + sizeof(uint32_t), len - sizeof(uint32_t));
+
+            if (added != len - sizeof(uint32_t)) {
                 THROW(APDU_CODE_OUTPUT_BUFFER_TOO_SMALL);
             }
             tx_initialized = true;

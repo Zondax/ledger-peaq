@@ -44,7 +44,7 @@ __Z_INLINE zxerr_t app_fill_eth_address() {
 
 __Z_INLINE void app_sign_eip191() {
     const uint8_t *message = tx_get_buffer();
-    const uint16_t messageLength = tx_get_buffer_length();
+    const uint32_t messageLength = tx_get_buffer_length();
     uint16_t replyLen = 0;
     uint8_t hash[32] = {0};
 

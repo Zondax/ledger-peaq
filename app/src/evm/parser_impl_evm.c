@@ -208,7 +208,7 @@ parser_error_t _readEth(parser_context_t *ctx, eth_tx_t *tx_obj) {
 
 parser_error_t _validateTxEth() {
     if (!validateERC20(&eth_tx_obj) && !app_mode_expert()) {
-        return parser_unsupported_tx;
+        return parser_expert_mode_required;
     }
 
     return parser_ok;
@@ -339,35 +339,39 @@ static parser_error_t printGeneric(const parser_context_t *ctx, uint8_t displayI
 
     char data_array[TMP_DATA_ARRAY_SIZE] = {0};
 
-    if ((displayIdx >= 3 && eth_tx_obj.tx.data.rlpLen == 0) || eth_tx_obj.tx.to.rlpLen == 0) {
+    if ((displayIdx >= 4 && eth_tx_obj.tx.data.rlpLen == 0) || (eth_tx_obj.tx.to.rlpLen == 0 && displayIdx >= 1)) {
         displayIdx += 1;
     }
 
-    if (eth_tx_obj.tx_type == eip1559 && displayIdx >= 7) {
+    if (eth_tx_obj.tx_type == eip1559 && displayIdx >= 8) {
         displayIdx++;
     }
 
-    if ((eth_tx_obj.tx_type == legacy || eth_tx_obj.tx_type == eip2930) && displayIdx >= 4) {
+    if ((eth_tx_obj.tx_type == legacy || eth_tx_obj.tx_type == eip2930) && displayIdx >= 5) {
         displayIdx += 2;
     }
 
     switch (displayIdx) {
         case 0:
+            snprintf(outKey, outKeyLen, "Warning:");
+            pageString(outVal, outValLen, "Blind-signing EVM Tx", pageIdx, pageCount);
+            break;
+        case 1:
             snprintf(outKey, outKeyLen, "To");
             rlp_t contractAddress = {.kind = RLP_KIND_STRING, .ptr = eth_tx_obj.tx.to.ptr, .rlpLen = ETH_ADDRESS_LEN};
             CHECK_ERROR(printEVMAddress(&contractAddress, outVal, outValLen, pageIdx, pageCount));
             break;
-        case 1: 
+        case 2: 
             snprintf(outKey, outKeyLen, "Coin asset");
             snprintf(outVal, outValLen, "peaq");
             break;
-        case 2:
+        case 3:
             snprintf(outKey, outKeyLen, "Value");
             printBigIntFixedPoint(eth_tx_obj.tx.value.ptr, eth_tx_obj.tx.value.rlpLen, outVal, outValLen, pageIdx, pageCount,
                                   COIN_DECIMALS);
             break;
 
-        case 3:
+        case 4:
             snprintf(outKey, outKeyLen, "Data");
             array_to_hexstr(
                 data_array, sizeof(data_array), eth_tx_obj.tx.data.ptr,
@@ -380,32 +384,32 @@ static parser_error_t printGeneric(const parser_context_t *ctx, uint8_t displayI
             pageString(outVal, outValLen, data_array, pageIdx, pageCount);
             break;
 
-        case 4:
+        case 5:
             snprintf(outKey, outKeyLen, "Max Priority Fee");
             CHECK_ERROR(printRLPNumber(&eth_tx_obj.tx.max_priority_fee_per_gas, outVal, outValLen, pageIdx, pageCount));
             break;
 
-        case 5:
+        case 6:
             snprintf(outKey, outKeyLen, "Max Fee");
             CHECK_ERROR(printRLPNumber(&eth_tx_obj.tx.max_fee_per_gas, outVal, outValLen, pageIdx, pageCount));
             break;
 
-        case 6: 
+        case 7: 
             snprintf(outKey, outKeyLen, "Gas limit");
             CHECK_ERROR(printRLPNumber(&eth_tx_obj.tx.gasLimit, outVal, outValLen, pageIdx, pageCount));
             break;
 
-        case 7:
+        case 8:
             snprintf(outKey, outKeyLen, "Gas price");
             CHECK_ERROR(printRLPNumber(&eth_tx_obj.tx.gasPrice, outVal, outValLen, pageIdx, pageCount));
             break;
 
-        case 8:
+        case 9:
             snprintf(outKey, outKeyLen, "Nonce");
             CHECK_ERROR(printRLPNumber(&eth_tx_obj.tx.nonce, outVal, outValLen, pageIdx, pageCount));
             break;
 
-        case 9:
+        case 10:
             CHECK_ERROR(printEthHash(ctx, outKey, outKeyLen, outVal, outValLen, pageIdx, pageCount));
             break;
 
@@ -425,7 +429,7 @@ parser_error_t _getItemEth(const parser_context_t *ctx, uint8_t displayIdx, char
         return printGeneric(ctx, displayIdx, outKey, outKeyLen, outVal, outValLen, pageIdx, pageCount);
     }
 
-    return parser_unsupported_tx;
+    return parser_expert_mode_required;
 }
 
 // returns the number of items to display on the screen.
@@ -445,7 +449,10 @@ parser_error_t _getNumItemsEth(uint8_t *numItems) {
         return parser_ok;
     }
 
-    *numItems = 6 + ((eth_tx_obj.tx.data.rlpLen != 0) ? 1 : 0) + ((eth_tx_obj.tx.to.rlpLen != 0) ? 1 : 0);
+    *numItems = 7 + ((eth_tx_obj.tx.data.rlpLen != 0) ? 1 : 0) + ((eth_tx_obj.tx.to.rlpLen != 0) ? 1 : 0);
+    if (eth_tx_obj.tx_type == eip1559) {
+        *numItems += 1;
+    }
     return parser_ok;
 }
 

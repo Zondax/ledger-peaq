@@ -61,7 +61,7 @@ static void uint32_to_str(uint32_t num, char *str) {
 
 zxerr_t eip191_msg_getNumItems(uint8_t *num_items) {
     zemu_log_stack("msg_getNumItems");
-    *num_items = 2;
+    *num_items = 3;
     return zxerr_ok;
 }
 
@@ -79,12 +79,16 @@ zxerr_t eip191_msg_getItem(int8_t displayIdx, char *outKey, uint16_t outKeyLen, 
     const uint16_t messageLength = tx_get_buffer_length();
 
     switch (displayIdx) {
-        case 0: {
+        case 0:
+            snprintf(outKey, outKeyLen, "Warning:");
+            pageString(outVal, outValLen, "Blind-signing EVM Tx", pageIdx, pageCount);
+            break;
+        case 1: {
             snprintf(outKey, outKeyLen, "Sign");
             snprintf(outVal, outValLen, "Personal Message");
             return zxerr_ok;
         }
-        case 1: {
+        case 2: {
             snprintf(outKey, outKeyLen, "Msg hex");
             uint16_t npc = 0;  // Non Printable Chars Counter
 

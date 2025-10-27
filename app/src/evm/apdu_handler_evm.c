@@ -134,6 +134,7 @@ bool process_chunk_eip191(__Z_UNUSED volatile uint32_t *tx, uint32_t rx) {
             return false;
     }
     THROW(APDU_CODE_INVALIDP1P2);
+    return false;
 }
 
 bool process_chunk_eth(__Z_UNUSED volatile uint32_t *tx, uint32_t rx) {

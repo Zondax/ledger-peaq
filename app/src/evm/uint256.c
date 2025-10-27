@@ -504,8 +504,8 @@ void divmod256(uint256_t *l, uint256_t *r, uint256_t *retDiv, uint256_t *retMod)
 }
 
 static void reverseString(char *str, uint32_t length) {
-    uint32_t i;
-    uint32_t j;
+    uint32_t i = 0;
+    uint32_t j = 0;
     for (i = 0, j = length - 1; i < j; i++, j--) {
         uint8_t c = 0;
         c = str[i];

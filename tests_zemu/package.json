@@ -24,7 +24,7 @@
     "upgrade": "bunx npm-check-updates -i"
   },
   "dependencies": {
-    "@zondax/ledger-peaq": "../js",
+    "@zondax/ledger-peaq": "^1.0.0",
     "@zondax/zemu": "^0.62.1"
   },
   "devDependencies": {

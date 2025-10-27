@@ -357,7 +357,7 @@ static parser_error_t printGeneric(const parser_context_t *ctx, uint8_t displayI
             rlp_t contractAddress = {.kind = RLP_KIND_STRING, .ptr = eth_tx_obj.tx.to.ptr, .rlpLen = ETH_ADDRESS_LEN};
             CHECK_ERROR(printEVMAddress(&contractAddress, outVal, outValLen, pageIdx, pageCount));
             break;
-        case 1: 
+        case 1:
             snprintf(outKey, outKeyLen, "Coin asset");
             snprintf(outVal, outValLen, "peaq");
             break;
@@ -390,7 +390,7 @@ static parser_error_t printGeneric(const parser_context_t *ctx, uint8_t displayI
             CHECK_ERROR(printRLPNumber(&eth_tx_obj.tx.max_fee_per_gas, outVal, outValLen, pageIdx, pageCount));
             break;
 
-        case 6: 
+        case 6:
             snprintf(outKey, outKeyLen, "Gas limit");
             CHECK_ERROR(printRLPNumber(&eth_tx_obj.tx.gasLimit, outVal, outValLen, pageIdx, pageCount));
             break;

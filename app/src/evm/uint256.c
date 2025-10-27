@@ -60,9 +60,13 @@ parser_error_t readu256BE(parser_context_t *ctx, uint256_t *bigInt) {
     return parser_ok;
 }
 
-bool zero128(uint128_t *number) { return ((LOWER_P(number) == 0) && (UPPER_P(number) == 0)); }
+bool zero128(uint128_t *number) {
+    return ((LOWER_P(number) == 0) && (UPPER_P(number) == 0));
+}
 
-bool zero256(uint256_t *number) { return (zero128(&LOWER_P(number)) && zero128(&UPPER_P(number))); }
+bool zero256(uint256_t *number) {
+    return (zero128(&LOWER_P(number)) && zero128(&UPPER_P(number)));
+}
 
 void copy128(uint128_t *target, uint128_t *number) {
     UPPER_P(target) = UPPER_P(number);
@@ -234,9 +238,13 @@ bool gt256(uint256_t *number1, uint256_t *number2) {
     return gt128(&UPPER_P(number1), &UPPER_P(number2));
 }
 
-bool gte128(uint128_t *number1, uint128_t *number2) { return gt128(number1, number2) || equal128(number1, number2); }
+bool gte128(uint128_t *number1, uint128_t *number2) {
+    return gt128(number1, number2) || equal128(number1, number2);
+}
 
-bool gte256(uint256_t *number1, uint256_t *number2) { return gt256(number1, number2) || equal256(number1, number2); }
+bool gte256(uint256_t *number1, uint256_t *number2) {
+    return gt256(number1, number2) || equal256(number1, number2);
+}
 
 void add128(uint128_t *number1, uint128_t *number2, uint128_t *target) {
     UPPER_P(target) = UPPER_P(number1) + UPPER_P(number2) + ((LOWER_P(number1) + LOWER_P(number2)) < LOWER_P(number1));

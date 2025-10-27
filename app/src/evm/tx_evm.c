@@ -26,7 +26,7 @@
 
 static parser_context_t ctx_parsed_tx;
 
-const char *tx_parse_eth(uint8_t* error_code) {
+const char *tx_parse_eth(uint8_t *error_code) {
     uint8_t err = parser_parse_eth(&ctx_parsed_tx, tx_get_buffer(), tx_get_buffer_length());
 
     CHECK_APP_CANARY()

@@ -15,11 +15,11 @@
  ********************************************************************************/
 
 #include <hexutils.h>
-#include <nlohmann/json.hpp>
 #include <parser_txdef.h>
 
 #include <fstream>
 #include <iostream>
+#include <nlohmann/json.hpp>
 
 #include "app_mode.h"
 #include "expected_output.h"
@@ -69,8 +69,8 @@ std::vector<testcase_t> GetJsonTestCases(std::string jsonFile) {
             outputs_expert.push_back(s.get<std::string>());
         }
 
-        answer.push_back(testcase_t{obj[i]["index"].get<uint64_t>(), obj[i]["name"].get<std::string>(), obj[i]["blob"].get<std::string>(),
-                                    outputs, outputs_expert});
+        answer.push_back(testcase_t{obj[i]["index"].get<uint64_t>(), obj[i]["name"].get<std::string>(),
+                                    obj[i]["blob"].get<std::string>(), outputs, outputs_expert});
     }
 
     return answer;
@@ -109,7 +109,8 @@ std::vector<testcase_t> GetEVMJsonTestCases(const std::string &jsonFile, Generat
 
         auto name = CleanTestname(i["description"].get<std::string>());
 
-        answer.push_back(testcase_t{answer.size() + 1, name, i["encoded_tx_hex"].get<std::string>(), outputs, outputs_expert});
+        answer.push_back(
+            testcase_t{answer.size() + 1, name, i["encoded_tx_hex"].get<std::string>(), outputs, outputs_expert});
     }
 
     return answer;

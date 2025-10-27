@@ -109,8 +109,7 @@ zxerr_t eip191_hash_message(const uint8_t *message, uint32_t messageLen, uint8_t
     uint32_to_str(len_str, sizeof(len_str), messageLen);
     CHECK_CX_OK(cx_hash_no_throw((cx_hash_t *)&sha3, 0, (uint8_t *)len_str, strlen(len_str), NULL, 0));
 
-    CHECK_CX_OK(
-        cx_hash_no_throw((cx_hash_t *)&sha3, CX_LAST, message, messageLen, hash, 32));
+    CHECK_CX_OK(cx_hash_no_throw((cx_hash_t *)&sha3, CX_LAST, message, messageLen, hash, 32));
 
 #endif
 

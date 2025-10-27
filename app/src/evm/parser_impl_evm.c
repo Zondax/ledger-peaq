@@ -421,7 +421,8 @@ parser_error_t _getItemEth(const parser_context_t *ctx, uint8_t displayIdx, char
     // At the moment, clear signing is available only for ERC20 transfer
     if (eth_tx_obj.is_erc20_transfer) {
         return printERC20Transfer(ctx, displayIdx, outKey, outKeyLen, outVal, outValLen, pageIdx, pageCount);
-    } else if (app_mode_blindsign()) {
+    }
+    if (app_mode_blindsign()) {
         return printGeneric(ctx, displayIdx, outKey, outKeyLen, outVal, outValLen, pageIdx, pageCount);
     }
 

@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "@zondax/ledger-peaq": "^1.0.0",
-    "@zondax/zemu": "^0.66.2"
+    "@zondax/zemu": "^0.67.3"
   },
   "devDependencies": {
     "@types/elliptic": "^6.4.18",

@@ -17,7 +17,7 @@
 #include "crypto_helper.h"
 
 #include "zxmacros_ledger.h"
-#if defined(LEDGER_SPECIFIC)
+#ifdef LEDGER_SPECIFIC
 #include "cx.h"
 #else
 #define CX_SHA256_SIZE    32
@@ -25,7 +25,7 @@
 #endif
 
 zxerr_t keccak_digest(const unsigned char *in, unsigned int inLen, unsigned char *out, unsigned int outLen) {
-#if defined(LEDGER_SPECIFIC)
+#ifdef LEDGER_SPECIFIC
     // return actual size using value from signatureLength
     cx_sha3_t keccak;
     if (cx_keccak_init_no_throw(&keccak, outLen * 8) != CX_OK) {

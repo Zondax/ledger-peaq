@@ -31,10 +31,15 @@
 
 static bool tx_initialized = false;
 static uint32_t bytes_to_read = 0;
+// INS of the command that opened the chunking session. Both signing commands
+// share the state above, so a continuation sent under the other INS must not
+// resume (or complete) a stream it did not start.
+static uint8_t chunk_session_ins = 0;
 
 void reset_evm_chunk_state(void) {
     tx_initialized = false;
     bytes_to_read = 0;
+    chunk_session_ins = 0;
 }
 
 void extract_eth_path(uint32_t rx, uint32_t offset) {
@@ -48,7 +53,7 @@ void extract_eth_path(uint32_t rx, uint32_t offset) {
 
     // Express the guard additively so a truncated APDU (rx <= offset) cannot
     // wrap the left-hand side to UINT32_MAX and pass the check.
-    if (rx < offset + 1 + sizeof(uint32_t) * path_len) {
+    if (rx < offset + 1 + (sizeof(uint32_t) * path_len)) {
         THROW(APDU_CODE_WRONG_LENGTH);
     }
 
@@ -106,13 +111,34 @@ bool process_chunk_eip191(__Z_UNUSED volatile uint32_t *tx, uint32_t rx) {
 
             // now process the chunk
             bytes_to_read = U4BE(data, 0);
-            bytes_to_read -= len - sizeof(uint32_t);
-            added = tx_append(data + sizeof(uint32_t), len - sizeof(uint32_t));
 
-            if (added != len - sizeof(uint32_t)) {
+            // An empty message has nothing to review and cannot be signed
+            // (eip191_hash_message refuses it), so refuse it before the user is
+            // asked to approve an empty review.
+            if (bytes_to_read == 0) {
+                THROW(APDU_CODE_WRONG_LENGTH);
+            }
+
+            // The guard above leaves at least the 4-byte prefix in len, so this
+            // subtraction cannot wrap.
+            const uint32_t first_payload = len - sizeof(uint32_t);
+
+            // The host declares the total message length and then sends the
+            // first chunk of it. A chunk carrying more than was declared would
+            // wrap bytes_to_read to near UINT32_MAX and leave the command
+            // waiting on bytes it will never ask for, so refuse it instead of
+            // subtracting.
+            if (first_payload > bytes_to_read) {
+                THROW(APDU_CODE_WRONG_LENGTH);
+            }
+            bytes_to_read -= first_payload;
+            added = tx_append(data + sizeof(uint32_t), first_payload);
+
+            if (added != first_payload) {
                 THROW(APDU_CODE_OUTPUT_BUFFER_TOO_SMALL);
             }
             tx_initialized = true;
+            chunk_session_ins = INS_SIGN_PERSONAL_MESSAGE;
 
             if (bytes_to_read == 0) {
                 return true;
@@ -120,11 +146,17 @@ bool process_chunk_eip191(__Z_UNUSED volatile uint32_t *tx, uint32_t rx) {
 
             return false;
         case P1_ETH_MORE:
-            if (!tx_initialized) {
+            if (!tx_initialized || chunk_session_ins != INS_SIGN_PERSONAL_MESSAGE) {
                 THROW(APDU_CODE_TX_NOT_INITIALIZED);
             }
 
-            // either the entire buffer of the remaining bytes we expect
+            // either the entire buffer of the remaining bytes we expect.
+            // A continuation chunk longer than what is still outstanding wraps
+            // bytes_to_read the same way the first chunk can, so bound it
+            // before subtracting.
+            if (len > bytes_to_read) {
+                THROW(APDU_CODE_WRONG_LENGTH);
+            }
             bytes_to_read -= len;
             added = tx_append(data, len);
             if (added != len) {
@@ -155,7 +187,6 @@ bool process_chunk_eth(__Z_UNUSED volatile uint32_t *tx, uint32_t rx) {
 
     uint64_t read = 0;
     uint64_t to_read = 0;
-    uint64_t max_len = 0;
 
     uint8_t *data = &(G_io_apdu_buffer[OFFSET_DATA]);
     uint32_t len = rx - OFFSET_DATA;
@@ -186,25 +217,31 @@ bool process_chunk_eth(__Z_UNUSED volatile uint32_t *tx, uint32_t rx) {
                 THROW(APDU_CODE_DATA_INVALID);
             }
 
-            // get remaining data len
-            max_len = saturating_add(read, to_read);
-            max_len = MIN(max_len, len);
+            // Total size the RLP header declares, header bytes included.
+            const uint64_t total_len = saturating_add(read, to_read);
 
-            added = tx_append(data, max_len);
-            if (added != max_len) {
+            // A first chunk carrying more than the header declares used to be
+            // truncated silently while the completion check below wrapped, so the
+            // stream only finished after an extra empty chunk. Refuse it instead.
+            if (len > total_len) {
+                THROW(APDU_CODE_WRONG_LENGTH);
+            }
+
+            added = tx_append(data, len);
+            if (added != len) {
                 THROW(APDU_CODE_OUTPUT_BUFFER_TOO_SMALL);
             }
 
             tx_initialized = true;
+            chunk_session_ins = INS_SIGN_ETH;
 
-            // if the number of bytes read and the number of bytes to read
-            //  is the same as what we read...
-            if ((saturating_add(read, to_read) - len) == 0) {
+            // complete only when the chunk holds exactly the declared transaction
+            if (len == total_len) {
                 return true;
             }
             return false;
         case P1_ETH_MORE:
-            if (!tx_initialized) {
+            if (!tx_initialized || chunk_session_ins != INS_SIGN_ETH) {
                 THROW(APDU_CODE_TX_NOT_INITIALIZED);
             }
 
@@ -215,23 +252,26 @@ bool process_chunk_eth(__Z_UNUSED volatile uint32_t *tx, uint32_t rx) {
                 THROW(APDU_CODE_DATA_INVALID);
             }
 
+            // get_tx_rlp_len keeps the header inside buff_len, so this cannot wrap.
             uint64_t rlp_read = buff_len - read;
-
-            // either the entire buffer of the remaining bytes we expect
-            uint64_t missing = to_read - rlp_read;
-            max_len = len;
-
-            if (missing < len) {
-                max_len = missing;
+            if (rlp_read > to_read) {
+                THROW(APDU_CODE_DATA_INVALID);
             }
-            added = tx_append(data, max_len);
 
-            if (added != max_len) {
+            // Same bound as the first chunk: a continuation longer than what is
+            // still outstanding is refused rather than truncated.
+            const uint64_t missing = to_read - rlp_read;
+            if (len > missing) {
+                THROW(APDU_CODE_WRONG_LENGTH);
+            }
+
+            added = tx_append(data, len);
+            if (added != len) {
                 THROW(APDU_CODE_OUTPUT_BUFFER_TOO_SMALL);
             }
 
             // check if this chunk was the last one
-            if (missing - len == 0) {
+            if (len == missing) {
                 return true;
             }
 
@@ -261,7 +301,6 @@ void handleGetAddrEth(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t 
     }
     if (requireConfirmation) {
         view_review_init(eth_addr_getItem, eth_addr_getNumItems, app_reply_address);
-        set_review_pending(true);
         view_review_show(REVIEW_ADDRESS);
         *flags |= IO_ASYNCH_REPLY;
         return;
@@ -296,7 +335,6 @@ void handleSignEth(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx)
 
     CHECK_APP_CANARY()
     view_review_init(tx_getItemEth, tx_getNumItemsEth, app_sign_eth);
-    set_review_pending(true);
     view_review_show(REVIEW_TXN);
     *flags |= IO_ASYNCH_REPLY;
 }
@@ -318,7 +356,6 @@ void handleSignEip191(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t 
     CHECK_APP_CANARY()
 
     view_review_init(eip191_msg_getItem, eip191_msg_getNumItems, app_sign_eip191);
-    set_review_pending(true);
     view_review_show(REVIEW_TXN);
     *flags |= IO_ASYNCH_REPLY;
 }

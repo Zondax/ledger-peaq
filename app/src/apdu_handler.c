@@ -33,12 +33,10 @@
 #include "view_internal.h"
 #include "zxmacros.h"
 
-bool review_pending = false;
-
 __Z_INLINE void handle_getversion(__Z_UNUSED volatile uint32_t *flags, volatile uint32_t *tx) {
     G_io_apdu_buffer[0] = 0;
 
-#if defined(APP_TESTING)
+#ifdef APP_TESTING
     G_io_apdu_buffer[0] = 0x01;
 #endif
 
@@ -77,7 +75,7 @@ void handleApdu(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
                 THROW(APDU_CODE_WRONG_LENGTH);
             }
 
-            if (is_review_pending()) {
+            if (view_review_is_pending()) {
                 THROW(APDU_CODE_COMMAND_NOT_ALLOWED);
             }
 
@@ -117,7 +115,7 @@ void handleApdu(volatile uint32_t *flags, volatile uint32_t *tx, uint32_t rx) {
             }
         }
         CATCH(EXCEPTION_IO_RESET) {
-            set_review_pending(false);
+            view_review_clear_pending();
             THROW(EXCEPTION_IO_RESET);
         }
         CATCH_OTHER(e) {

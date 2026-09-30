@@ -23,7 +23,7 @@
 #include "zxformat.h"
 #include "zxmacros.h"
 
-#if defined(LEDGER_SPECIFIC)
+#ifdef LEDGER_SPECIFIC
 #include "cx.h"
 #else
 #define CX_SHA256_SIZE    32
@@ -60,23 +60,27 @@ zxerr_t eip191_msg_getItem(int8_t displayIdx, char *outKey, uint16_t outKeyLen, 
             return zxerr_ok;
         }
         case 1: {
-            snprintf(outKey, outKeyLen, "Msg hex");
-            uint16_t npc = 0;  // Non Printable Chars Counter
-
+            // A single byte outside printable ASCII (a NUL, a newline, any control or
+            // high byte) either cuts the rendered text short or does not show up on
+            // screen, while every byte is still signed. Show such a message as hex.
+            bool printable = true;
             for (uint16_t i = 0; i < messageLength; i++) {
-                npc += IS_PRINTABLE(message[i]) ? 0 /* Printable Char */ : 1 /* Non Printable Char */;
+                if (!IS_PRINTABLE(message[i])) {
+                    printable = false;
+                    break;
+                }
             }
 
-            // msg in hex in case >= than 40% is non printable
-            // or first char is not printable.
-            if (messageLength > 0 && (npc * 100) / messageLength >= 40) {
+            if (!printable) {
+                snprintf(outKey, outKeyLen, "Msg hex");
                 pageStringHex(outVal, outValLen, (const char *)message, messageLength, pageIdx, pageCount);
                 return zxerr_ok;
             }
 
-            // print message
+            // Page by the stored length: the buffer is not NUL-terminated, so strlen
+            // would run past the message into whatever the buffer held before.
             snprintf(outKey, outKeyLen, "Msg");
-            pageString(outVal, outValLen, (const char *)message, pageIdx, pageCount);
+            pageStringExt(outVal, outValLen, (const char *)message, messageLength, pageIdx, pageCount);
             return zxerr_ok;
         }
         default:
@@ -100,7 +104,7 @@ zxerr_t eip191_hash_message(const uint8_t *message, uint32_t messageLen, uint8_t
     }
     MEMZERO(hash, 32);
 
-#if defined(LEDGER_SPECIFIC)
+#ifdef LEDGER_SPECIFIC
     cx_sha3_t sha3;
     char len_str[12] = {0};
 

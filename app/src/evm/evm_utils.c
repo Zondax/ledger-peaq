@@ -99,6 +99,12 @@ rlp_error_t get_tx_rlp_len(const uint8_t *buffer, uint32_t len, uint64_t *read, 
         *read += 1;
     }
 
+    // The marker and any length bytes it announces must lie inside the bytes the
+    // caller holds; past len they would be read from stale buffer contents.
+    if (offset >= len) {
+        return rlp_no_data;
+    }
+
     // get rlp marker
     uint8_t marker = data[offset];
 
@@ -118,6 +124,9 @@ rlp_error_t get_tx_rlp_len(const uint8_t *buffer, uint32_t len, uint64_t *read, 
         // in the marker
         // And then the length is just the number BE encoded
         uint64_t num_bytes = (marker - RLP_MARKER_VAL_2);
+        if (num_bytes > len - offset) {
+            return rlp_no_data;
+        }
 
         uint64_t num = 0;
         if (be_bytes_to_u64(&data[offset], num_bytes, &num) != 0) {
